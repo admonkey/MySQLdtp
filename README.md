@@ -25,7 +25,9 @@ Test environments have two user accounts with the same password and nearly ident
 The privileged accounts are designated by `_UA_` (User ALL)
 and are intended for use with [DDL][1] in development and testing.
 The execute only accounts are designated by `_UE_` (User EXECUTE)
-and are intended for use with [DML][2] in testing and production.
+and are intended for use by the application in testing and production.
+This follows the [principle of least privilege][3] whereby
+all [DML][2] is wrapped within explicit parameterized stored procedures.
 
 ### Examples
 
@@ -93,5 +95,6 @@ Execute scripts prompting input for database credentials:
 ----------
 [1]:https://en.wikipedia.org/wiki/Data_definition_language
 [2]:https://en.wikipedia.org/wiki/Data_manipulation_language
+[3]:https://en.wikipedia.org/wiki/Principle_of_least_privilege
 
 > Written with [StackEdit](https://stackedit.io/).
