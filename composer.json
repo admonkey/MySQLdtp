@@ -1,0 +1,4 @@
+{
+    "name": "jeff-puckett/mysql-dtp",
+    "description": "Bash scripts to generate MySQL environments for dev/test/prod and execute a list of SQL scripts."
+}
