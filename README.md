@@ -59,8 +59,7 @@ and one for executing SQL scripts, such as [DDL][2].
 `exec_sql.bash`
 
     list of SQL files: -l </path/to/SQL.lst>
-    credentials file:  -c </path/to/credentials.local.bash>
-    credentials input: -u
+    credentials file  (optional prompt): -c </path/to/credentials.local.bash>
 
 `exec_sql.bash` will execute scripts listed in order from the directory in which the list is located.
 The list may contain relative paths to files outside its directory, or absolute paths.
@@ -84,13 +83,13 @@ relative paths outside the directory, or absolute paths anywhere on the system.
     ../ddl.sql
     /var/www/project/SQL/stored_procedures.sql
 
-Execute scripts to drop tables, create tables, and stored procedures using credentials file:
+Execute SQL scripts by prompting input for database credentials:
+
+    ./exec_sql.bash -l "/var/www/project/SQL/example_sql.lst"
+
+Execute using credentials file:
 
     ./exec_sql.bash -l "/var/www/project/SQL/example_sql.lst" -c credentials.local.bash
-
-Execute scripts prompting input for database credentials:
-
-    ./exec_sql.bash -l "/var/www/project/SQL/example_sql.lst" -u
 
 ----------
 [1]:https://en.wikipedia.org/wiki/Data_definition_language
