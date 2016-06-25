@@ -12,9 +12,8 @@ set -e
 # get parameters
 usage() {
   echo "Usage: ${BASH_SOURCE[0]}
-    list of SQL files: -l </path/to/SQL.lst>
-    credentials file:  -c </path/to/credentials.local.bash>
-    credentials input: -u
+    list of SQL files: -l <path/to/SQL.lst>
+    credentials file (optional prompt): -c <path/to/credentials.local.bash>
   " 1>&2
   exit 1
 }
@@ -36,15 +35,6 @@ while getopts "l:c:u" o; do
         source "$CREDENTIALS"
       fi
       ;;
-    u)
-      echo "Please enter username: "
-      read database_user
-      echo "Please enter password: "
-      stty_orig=`stty -g`
-      stty -echo
-      read database_password
-      stty $stty_orig
-      ;;
     *)
       usage
       ;;
@@ -59,9 +49,18 @@ if [ -z "${SQLLIST+x}" ]; then
   echo "ERROR: SQL list required."
   usage
 fi
-if [ -z "${CREDENTIALS+x}" ] && [ -z "${database_user+x}" ]; then
-  echo "ERROR: MySQL credentials required."
-  usage
+if [ -z "${CREDENTIALS+x}" ]; then
+  echo "Please enter server host name: "
+  read database_server
+  echo "Please enter database name: "
+  read database_name
+  echo "Please enter username: "
+  read database_user
+  echo "Please enter password: "
+  stty_orig=`stty -g`
+  stty -echo
+  read database_password
+  stty $stty_orig
 fi
 if [ -z ${database_server+x} ]; then
   echo "ERROR: database_server is not set"
