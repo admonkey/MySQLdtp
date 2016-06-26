@@ -1,5 +1,7 @@
 # Generate MySQL Environments
 
+Use Bash & MySQL client to create dev/test/prod database & users, and execute a list of your SQL scripts.
+
 * Development
     * user with all privileges (Bash & PHP credentials file generated)
     * 16 character password
@@ -10,6 +12,13 @@
 * Production
     * user with only stored procedure execute privileges (PHP credentials file generated)
     * 32 character password
+
+## Requirements
+
+* GNU bash, version 4.3.11(1)-release (x86_64-pc-linux-gnu)
+* mysql  Ver 14.14 Distrib 5.5.49, for debian-linux-gnu (x86_64) using readline 6.3
+
+Please report all bugs on the [Github issues page][4].
 
 ## Naming Schema
 
@@ -46,36 +55,42 @@ all [DML][2] is wrapped within explicit parameterized stored procedures.
 
 ## Getting Started
 
+It's recommended to install this from [packagist][6] into your project as a dependency using [composer][5].
+
+    php composer.phar require jeff-puckett/mysql-dtp
+
 There are two scripts:
 one for creating the database and users,
 and one for executing SQL scripts, such as [DDL][2].
 
-`create_db_users.bash`
+* `create_db_users.bash`
 
-    environment: -e <dev|test|prod>
-    database name (limit 7 characters): -n <name>
-    database server (optional default localhost): -s <hostname>
+        environment: -e <dev|test|prod>
+        database name (limit 7 characters): -n <name>
+        database server (optional default localhost): -s <hostname>
 
-`exec_sql.bash`
+   This will generate one or both of `credentials.local.bash` and `credentials.local.inc.php`
 
-    list of SQL files: -l </path/to/SQL.lst>
-    credentials file  (optional prompt): -c </path/to/credentials.local.bash>
+* `exec_sql.bash`
 
-`exec_sql.bash` will execute scripts listed in order from the directory in which the list is located.
-The list may contain relative paths to files outside its directory, or absolute paths.
+        list of SQL files: -l </path/to/SQL.lst>
+        credentials file  (optional prompt): -c </path/to/credentials.local.bash>
+
+   This will execute SQL scripts listed in order from the directory in which the list is located.
+   The list may contain relative or absolute paths to SQL files.
 
 ### Examples
 
-Create a development environment with name prefix `dbname` on localhost:
+Create a *development* environment with name prefix `dbname` on *localhost*:
 
-    ./create_db_users.bash -e dev -n dbname
+    ./vendor/jeff-puckett/mysql-dtp/create_db_users.bash -e dev -n dbname
 
-Create a production environment with name prefix `dbname` on a server located at `mysql.example.com`
+Create a *production* environment with name prefix `dbname` on a *server* located at `mysql.example.com`
 
-    ./create_db_users.bash -e prod -n dbname -s "mysql.example.com"
+    ./vendor/jeff-puckett/mysql-dtp/create_db_users.bash -e prod -n dbname -s "mysql.example.com"
 
-A list of SQL scripts to be executed can contain files in the same directory,
-relative paths outside the directory, or absolute paths anywhere on the system.
+A list of SQL scripts to be executed can contain files in the *same* directory,
+*relative* paths outside the directory, or *absolute* paths anywhere on the system.
 
 `example_sql.lst`
 
@@ -83,17 +98,34 @@ relative paths outside the directory, or absolute paths anywhere on the system.
     ../ddl.sql
     /var/www/project/SQL/stored_procedures.sql
 
-Execute SQL scripts by prompting input for database credentials:
+Use the generated credentials file to execute the list of SQL scripts:
 
-    ./exec_sql.bash -l "/var/www/project/SQL/example_sql.lst"
+    ./vendor/jeff-puckett/mysql-dtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst" -c credentials.local.bash
 
-Execute using credentials file:
+Or prompt for database credentials when executing:
 
-    ./exec_sql.bash -l "/var/www/project/SQL/example_sql.lst" -c credentials.local.bash
+    ./vendor/jeff-puckett/mysql-dtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst"
+
+### Saving Commands & Version Control
+
+Writing out these long commands repeatedly gets old quickly.
+`exec_sql.bash` will save the last command you run to an executable file called `exec_sql`
+Notice that it has no file extension such as `.bash`
+You will be able to run the last saved command with an easy shortcut:
+
+    ./exec_sql
+
+If you run a different command later, then you will be prompted to overwrite before saving.
+
+It is advisable to commit both your shortcut `exec_sql` and the SQL list to version control,
+but *do not* track your `credentials.local.*` files.
 
 ----------
 [1]:https://en.wikipedia.org/wiki/Data_definition_language
 [2]:https://en.wikipedia.org/wiki/Data_manipulation_language
 [3]:https://en.wikipedia.org/wiki/Principle_of_least_privilege
+[4]:https://github.com/jeff-puckett/mysql-dtp/issues
+[5]:https://getcomposer.org/
+[6]:https://packagist.org/packages/jeff-puckett/mysql-dtp
 
 > Written with [StackEdit](https://stackedit.io/).
