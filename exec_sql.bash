@@ -10,6 +10,11 @@
 set -e
 
 # get parameters
+cmd="${BASH_SOURCE[0]}"
+
+for arg in "$@"; do
+  cmd="$cmd $arg"
+done
 usage() {
   echo "Usage: ${BASH_SOURCE[0]}
     list of SQL files: -l <path/to/SQL.lst>
@@ -87,3 +92,19 @@ cd $( dirname "$SQLLIST" )
 while IFS='' read -r sql || [[ -n "$sql" ]]; do
   mysql --host="$database_server" --user="$database_user" --password="$database_password" --database="$database_name" < $sql
 done < "$SQLLIST"
+
+
+# save the last command for easy access
+if [ -f exec_sql ]; then
+  while true; do
+      read -p "Do you wish to save this command and overwrite exec_sql? [y/n] " yn
+      case $yn in
+          [Yy]* ) break;;
+          [Nn]* ) exit;;
+          * ) echo "Please answer y or n.";;
+      esac
+  done
+fi
+
+echo "$cmd" > exec_sql
+chmod +x exec_sql
