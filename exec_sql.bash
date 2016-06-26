@@ -95,16 +95,28 @@ done < "$SQLLIST"
 
 
 # save the last command for easy access
+save_exec_sql=true
 if [ -f exec_sql ]; then
-  while true; do
-      read -p "Do you wish to save this command and overwrite exec_sql? [y/n] " yn
-      case $yn in
-          [Yy]* ) break;;
-          [Nn]* ) exit;;
-          * ) echo "Please answer y or n.";;
-      esac
-  done
+
+  line=$(head -n 1 exec_sql)
+  if [ "$cmd" != "$line" ]; then
+
+    while true; do
+        read -p "Do you wish to save this command and overwrite exec_sql? [y/n] " yn
+        case $yn in
+            [Yy]* ) break;;
+            [Nn]* ) exit;;
+            * ) echo "Please answer y or n.";;
+        esac
+    done
+
+  else
+    save_exec_sql=false
+  fi
+
 fi
 
-echo "$cmd" > exec_sql
-chmod +x exec_sql
+if $save_exec_sql; then
+  echo "$cmd" > exec_sql
+  chmod +x exec_sql
+fi
