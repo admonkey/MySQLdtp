@@ -85,7 +85,9 @@ if [ -z ${database_name+x} ]; then
 fi
 
 # move to working directory
+curdir=$(pwd)
 cd $( dirname "$SQLLIST" )
+SQLLIST=$(basename "$SQLLIST")
 
 # execute SQL
 # http://stackoverflow.com/a/10929511/4233593
@@ -93,6 +95,8 @@ while IFS='' read -r sql || [[ -n "$sql" ]]; do
   mysql --host="$database_server" --user="$database_user" --password="$database_password" --database="$database_name" < $sql
 done < "$SQLLIST"
 
+# go back to original directory
+cd "$curdir"
 
 # save the last command for easy access
 save_exec_sql=true
