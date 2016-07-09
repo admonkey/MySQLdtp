@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS testerino;
+CREATE TABLE IF NOT EXISTS testerino (id INT PRIMARY KEY AUTO_INCREMENT, val VARCHAR(11));
+INSERT INTO testerino (val) VALUES ('hello world');
