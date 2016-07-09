@@ -1,6 +1,7 @@
 # Generate MySQL Environments
 
 Use Bash & MySQL client to create dev/test/prod database & users, and execute a list of your SQL scripts.
+The default character set is UTF-8 and collation is utf8_unicode_ci.
 
 * Development
     * user with all privileges (Bash & PHP credentials file generated)

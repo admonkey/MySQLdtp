@@ -136,7 +136,7 @@ stty $stty_orig
 
 mysql --host="$database_server" --user="$privileged_user_name" --password="$privileged_user_pw" << EOF
 
-CREATE DATABASE $new_db_name;
+CREATE DATABASE $new_db_name CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 CREATE USER '$new_username'@'$database_server' IDENTIFIED BY '$new_password';
 
