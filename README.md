@@ -121,6 +121,19 @@ If you run a different command later, then you will be prompted to overwrite bef
 It is advisable to commit both your shortcut `exec_sql` and the SQL list to version control,
 but *do not* track your `credentials.local.*` files.
 
+## Developing and Testing this Project
+
+There's a `tests` folder with some trivial SQL and an executable `exec_sql`
+the contents of which are:
+
+    ../exec_sql.bash -c credentials.local.bash -l SQL/sql.lst
+
+So in order to generate the required `credentials.local.bash` file, just run
+the included script to set up your test database, for example called `mydtp`:
+
+    cd tests
+    ../create_db_users.bash -e test -n mydtp
+
 ----------
 [1]:https://en.wikipedia.org/wiki/Data_definition_language
 [2]:https://en.wikipedia.org/wiki/Data_manipulation_language
