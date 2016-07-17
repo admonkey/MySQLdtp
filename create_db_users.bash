@@ -22,6 +22,8 @@
 #               credentials.local.inc.php
 #
 
+set -e
+
 # get parameters
 usage() {
   echo "Usage: ${BASH_SOURCE[0]}
