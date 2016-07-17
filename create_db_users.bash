@@ -31,7 +31,7 @@ usage() {
   " 1>&2
   exit 1
 }
-while getopts "e:s:n:" o; do
+while getopts "e:s:n:u:p:" o; do
   case "${o}" in
     e)
       ENVIRONMENT=${OPTARG}
@@ -42,6 +42,12 @@ while getopts "e:s:n:" o; do
       ;;
     s)
       DATABASE_SERVER=${OPTARG}
+      ;;
+    u)
+      privileged_user_name=${OPTARG}
+      ;;
+    p)
+      privileged_user_pw=${OPTARG}
       ;;
     *)
       usage
@@ -126,13 +132,15 @@ else
 
 fi
 
-echo "Please enter username (e.g. root): "
-read privileged_user_name
-echo "Please enter password: "
-stty_orig=`stty -g`
-stty -echo
-read privileged_user_pw
-stty $stty_orig
+if [ -z "${privileged_user_name+x}" ]; then
+  echo "Please enter username (e.g. root): "
+  read privileged_user_name
+  echo "Please enter password: "
+  stty_orig=`stty -g`
+  stty -echo
+  read privileged_user_pw
+  stty $stty_orig
+fi
 
 mysql --host="$database_server" --user="$privileged_user_name" --password="$privileged_user_pw" << EOF
 
