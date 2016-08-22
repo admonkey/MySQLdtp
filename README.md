@@ -137,11 +137,10 @@ the included script to set up your test database, for example called `mydtp`:
     ../create_db_users.bash -e test -n mydtp
 
 ----------
-[1]:https://en.wikipedia.org/wiki/Data_definition_language
-[2]:https://en.wikipedia.org/wiki/Data_manipulation_language
-[3]:https://en.wikipedia.org/wiki/Principle_of_least_privilege
-[4]:https://github.com/jeff-puckett/mysql-dtp/issues
-[5]:https://getcomposer.org/
-[6]:https://packagist.org/packages/jeff-puckett/mysql-dtp
 
-> Written with [StackEdit](https://stackedit.io/).
+  [1]:https://en.wikipedia.org/wiki/Data_definition_language
+  [2]:https://en.wikipedia.org/wiki/Data_manipulation_language
+  [3]:https://en.wikipedia.org/wiki/Principle_of_least_privilege
+  [4]:https://github.com/jeff-puckett/mysql-dtp/issues
+  [5]:https://getcomposer.org/
+  [6]:https://packagist.org/packages/jeff-puckett/mysql-dtp
