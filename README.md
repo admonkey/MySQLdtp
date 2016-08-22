@@ -123,6 +123,15 @@ If you run a different command later, then you will be prompted to overwrite bef
 It is advisable to commit both your shortcut `exec_sql` and the SQL list to version control,
 but *do not* track your `credentials.local.*` files.
 
+### Troubleshooting
+
+    line 95: $sql: ambiguous redirect
+
+This is most likely caused by sending your `ddl.sql` file as the
+list. The `sql.lst` is supposed to be a list of filenames that
+contain DDL, and not the DDL file itself. This is a common mistake
+when your project only has one DDL file.
+
 ## Developing and Testing this Project
 
 There's a `tests` folder with some trivial SQL and an executable `exec_sql`
