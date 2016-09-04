@@ -1,5 +1,5 @@
 {
-    "name": "jeff-puckett/mysql-dtp",
+    "name": "jpuck/mydtp",
     "description": "Bash scripts to generate MySQL environments for dev/test/prod and execute a list of SQL scripts.",
     "bin": [
         "create_db_users.bash",
