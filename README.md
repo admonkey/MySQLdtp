@@ -1,6 +1,6 @@
 # Generate MySQL Environments
 
-[![Latest Stable Version](https://poser.pugx.org/jeff-puckett/mysql-dtp/v/stable)](https://packagist.org/packages/jeff-puckett/mysql-dtp) [![Total Downloads](https://poser.pugx.org/jeff-puckett/mysql-dtp/downloads)](https://packagist.org/packages/jeff-puckett/mysql-dtp) [![Latest Unstable Version](https://poser.pugx.org/jeff-puckett/mysql-dtp/v/unstable)](https://packagist.org/packages/jeff-puckett/mysql-dtp) [![License](https://poser.pugx.org/jeff-puckett/mysql-dtp/license)](https://packagist.org/packages/jeff-puckett/mysql-dtp)
+[![Latest Stable Version](https://poser.pugx.org/jpuck/mydtp/v/stable)](https://packagist.org/packages/jeff-puckett/mysql-dtp) [![Total Downloads](https://poser.pugx.org/jpuck/mydtp/downloads)](https://packagist.org/packages/jeff-puckett/mysql-dtp) [![Latest Unstable Version](https://poser.pugx.org/jpuck/mydtp/v/unstable)](https://packagist.org/packages/jeff-puckett/mysql-dtp) [![License](https://poser.pugx.org/jpuck/mydtp/license)](https://packagist.org/packages/jeff-puckett/mysql-dtp)
 
 Use Bash & MySQL client to create dev/test/prod database & users, and execute a list of your SQL scripts.
 The default character set is UTF-8 and collation is utf8_unicode_ci.
