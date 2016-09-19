@@ -161,10 +161,10 @@ DATE=$(date "+%Y-%m-%d %A %H:%M:%S")
 
 cat << EOF >> credentials.local.bash
 # created $DATE
-database_server="$database_server"
-database_user="$new_username"
-database_password="$new_password"
-database_name="$new_db_name"
+database_server='$database_server'
+database_user='$new_username'
+database_password='$new_password'
+database_name='$new_db_name'
 $test_dbo_username
 
 EOF
@@ -175,9 +175,9 @@ fi
 
 cat << EOF >> credentials.local.inc.php
 // created $DATE
-\$database_server = "$database_server";
-\$database_username = "$new_username";
-\$database_password = "$new_password";
-\$database_name = "$new_db_name";
+\$database_server = '$database_server';
+\$database_username = '$new_username';
+\$database_password = '$new_password';
+\$database_name = '$new_db_name';
 
 EOF
