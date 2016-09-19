@@ -1,8 +1,16 @@
 {
     "name": "jpuck/mydtp",
     "description": "Bash scripts to generate MySQL environments for dev/test/prod and execute a list of SQL scripts.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeff Puckett",
+            "email": "jeff@jeffpuckett.com"
+        }
+    ],
     "bin": [
         "create_db_users.bash",
         "exec_sql.bash"
-    ]
+    ],
+    "require": {}
 }
