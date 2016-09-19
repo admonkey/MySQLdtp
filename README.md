@@ -1,6 +1,6 @@
 # Generate MySQL Environments
 
-[![Latest Stable Version](https://poser.pugx.org/jpuck/mydtp/v/stable)](https://packagist.org/packages/jeff-puckett/mysql-dtp) [![Total Downloads](https://poser.pugx.org/jpuck/mydtp/downloads)](https://packagist.org/packages/jeff-puckett/mysql-dtp) [![Latest Unstable Version](https://poser.pugx.org/jpuck/mydtp/v/unstable)](https://packagist.org/packages/jeff-puckett/mysql-dtp) [![License](https://poser.pugx.org/jpuck/mydtp/license)](https://packagist.org/packages/jeff-puckett/mysql-dtp)
+[![Latest Stable Version](https://poser.pugx.org/jpuck/mydtp/v/stable)](https://packagist.org/packages/jpuck/mydtp) [![Total Downloads](https://poser.pugx.org/jpuck/mydtp/downloads)](https://packagist.org/packages/jpuck/mydtp) [![Latest Unstable Version](https://poser.pugx.org/jpuck/mydtp/v/unstable)](https://packagist.org/packages/jpuck/mydtp) [![License](https://poser.pugx.org/jpuck/mydtp/license)](https://packagist.org/packages/jpuck/mydtp)
 
 Use Bash & MySQL client to create dev/test/prod database & users, and execute a list of your SQL scripts.
 The default character set is UTF-8 and collation is utf8_unicode_ci.
@@ -60,7 +60,7 @@ all [DML][2] is wrapped within explicit parameterized stored procedures.
 
 It's recommended to install this from [packagist][6] into your project as a dependency using [composer][5].
 
-    php composer.phar require jeff-puckett/mysql-dtp
+    php composer.phar require jpuck/mydtp
 
 There are two scripts:
 one for creating the database and users,
@@ -86,11 +86,11 @@ and one for executing SQL scripts, such as [DDL][2].
 
 Create a *development* environment with name prefix `dbname` on *localhost*:
 
-    ./vendor/jeff-puckett/mysql-dtp/create_db_users.bash -e dev -n dbname
+    ./vendor/jpuck/mydtp/create_db_users.bash -e dev -n dbname
 
 Create a *production* environment with name prefix `dbname` on a *server* located at `mysql.example.com`
 
-    ./vendor/jeff-puckett/mysql-dtp/create_db_users.bash -e prod -n dbname -s "mysql.example.com"
+    ./vendor/jpuck/mydtp/create_db_users.bash -e prod -n dbname -s "mysql.example.com"
 
 A list of SQL scripts to be executed can contain files in the *same* directory,
 *relative* paths outside the directory, or *absolute* paths anywhere on the system.
@@ -103,11 +103,11 @@ A list of SQL scripts to be executed can contain files in the *same* directory,
 
 Use the generated credentials file to execute the list of SQL scripts:
 
-    ./vendor/jeff-puckett/mysql-dtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst" -c credentials.local.bash
+    ./vendor/jpuck/mydtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst" -c credentials.local.bash
 
 Or prompt for database credentials when executing:
 
-    ./vendor/jeff-puckett/mysql-dtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst"
+    ./vendor/jpuck/mydtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst"
 
 ### Saving Commands & Version Control
 
@@ -150,6 +150,6 @@ the included script to set up your test database, for example called `mydtp`:
   [1]:https://en.wikipedia.org/wiki/Data_definition_language
   [2]:https://en.wikipedia.org/wiki/Data_manipulation_language
   [3]:https://en.wikipedia.org/wiki/Principle_of_least_privilege
-  [4]:https://github.com/jeff-puckett/mysql-dtp/issues
+  [4]:https://github.com/jpuck/mydtp/issues
   [5]:https://getcomposer.org/
-  [6]:https://packagist.org/packages/jeff-puckett/mysql-dtp
+  [6]:https://packagist.org/packages/jpuck/mydtp
