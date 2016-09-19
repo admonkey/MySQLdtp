@@ -76,11 +76,14 @@ database_server="$DATABASE_SERVER"
 # thanks vivek@nixCraft
 # http://www.cyberciti.biz/faq/linux-random-password-generator/
 genpasswd() {
-        local l=$1
-        [ "$l" == "" ] && l=16
-        tr -dc A-Za-z0-9 < /dev/urandom | head -c ${l} | xargs
+	local l=$1
+	[ "$l" == "" ] && l=16
+	tr -dc \\050-\\172 < /dev/urandom | head -c ${l}
 }
-new_id="$(genpasswd 5)"
+genid() {
+	tr -dc A-Za-z0-9 < /dev/urandom | head -c 5
+}
+new_id="$(genid)"
 new_password="$(genpasswd)"
 test_dbo_username=""
 
