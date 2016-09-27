@@ -12,5 +12,7 @@
         "create_db_users.bash",
         "exec_sql.bash"
     ],
-    "require": {}
+    "require": {
+        "symfony/console": "^3.1"
+    }
 }
