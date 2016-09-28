@@ -8,7 +8,7 @@
 			"email": "jeff@jeffpuckett.com"
 		}
 	],
-	"bin": ["dbdtp"],
+	"bin": ["bin/dbdtp"],
 	"require": {
 		"symfony/console": "^3.1"
 	}
