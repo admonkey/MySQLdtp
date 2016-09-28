@@ -11,5 +11,10 @@
 	"bin": ["bin/dbdtp"],
 	"require": {
 		"symfony/console": "^3.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"jpuck\\dbdtp\\": "src/"
+		}
 	}
 }

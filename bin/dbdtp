@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-
+namespace jpuck\dbdtp;
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
@@ -16,5 +16,7 @@ Database Dev/Test/Prod';
 // http://www.patorjk.com/software/taag/#p=display&f=Ivrit&t=dbdtp
 
 $app = new Application($logo,'2.0-dev');
+
+$app->add(new Create);
 
 $app->run();
