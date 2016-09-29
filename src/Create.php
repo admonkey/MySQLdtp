@@ -9,6 +9,9 @@ use Symfony\Component\Console\Question\Question;
 
 class Create extends Command {
 
+	protected $idchars =
+		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 	protected function configure(){
 		$this->setName('create')
 			->setDescription('Create a database and user accounts.')
@@ -38,11 +41,13 @@ class Create extends Command {
 			return;
 		}
 
-		$formattedLine = $formatter->formatSection(
-			'Name',
-			"The databse name is: <options=reverse>$name</>"
-		);
-		$output->writeln($formattedLine);
+		// generate ID
+		$id = (
+			(new \RandomLib\Factory)->getMediumStrengthGenerator()
+		)->generateString(5, $this->idchars);
+		$name = "{$name}_$id";
+
+		$output->writeln("database name: <info>[ $name ]</>");
 
 	}
 }
