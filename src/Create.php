@@ -3,12 +3,16 @@ namespace jpuck\dbdtp;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
 class Create extends Command {
-
+	protected $errorMessages;
+	protected $input;
+	protected $output;
+	protected $name;
 	protected $idchars =
 		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -23,33 +27,16 @@ class Create extends Command {
 	}
 
 	public function execute(InputInterface $input, OutputInterface $output){
+		$this->input = $input;
+		$this->output = $output;
 		$formatter = $this->getHelper('formatter');
 
-		// get database name
-		$name = $input->getArgument('name');
-		if (empty($name)){
-			$helper = $this->getHelper('question');
-			$question = new Question(
-				'Please enter a name for the database (max 7 characters) '
-			);
-			$name = $helper->ask($input, $output, $question);
-		}
+		$this->getDbName();
 
 		// validation
-		if (empty($name)){
-			$errorMessages []= 'Name cannot be empty.';
-		}
-
-		// validation
-		$name_length = strlen($name);
-		if ($name_length > 7){
-			$errorMessages []=
-				"Maximum 7 characters allowed. $name is $name_length.";
-		}
-
-		// validation
-		if (!empty($errorMessages)){
-			$formattedBlock = $formatter->formatBlock($errorMessages, 'error');
+		if (!empty($this->errorMessages)){
+			$formattedBlock = $formatter
+				->formatBlock($this->errorMessages, 'error');
 			$output->writeln($formattedBlock);
 			return 1;
 		}
@@ -58,9 +45,33 @@ class Create extends Command {
 		$id = (
 			(new \RandomLib\Factory)->getMediumStrengthGenerator()
 		)->generateString(5, $this->idchars);
-		$name = "{$name}_$id";
+		$this->name = "{$this->name}_$id";
 
 		// success
-		$output->writeln("<comment>database name:</> <info>[ $name ]</>");
+		$output->writeln("<comment>database name:</> <info>{$this->name}</>");
+	}
+
+	protected function getDbName(){
+		// get database name
+		$this->name = $this->input->getArgument('name');
+		if (empty($this->name)){
+			$helper = $this->getHelper('question');
+			$question = new Question(
+				'Please enter a name for the database (max 7 characters) '
+			);
+			$this->name = $helper->ask($this->input, $this->output, $question);
+		}
+
+		// validation
+		if (empty($this->name)){
+			$this->errorMessages []= 'Name cannot be empty.';
+		}
+
+		// validation
+		$name_length = strlen($this->name);
+		if ($name_length > 7){
+			$this->errorMessages []=
+				"Maximum 7 characters allowed. {$this->name} is $name_length.";
+		}
 	}
 }
