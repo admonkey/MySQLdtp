@@ -25,20 +25,33 @@ class Create extends Command {
 	public function execute(InputInterface $input, OutputInterface $output){
 		$formatter = $this->getHelper('formatter');
 
+		// get database name
 		$name = $input->getArgument('name');
 		if (empty($name)){
 			$helper = $this->getHelper('question');
 			$question = new Question(
-				'What name would you like to use for the database? '
+				'Please enter a name for the database (max 7 characters) '
 			);
 			$name = $helper->ask($input, $output, $question);
 		}
 
+		// validation
 		if (empty($name)){
-			$errorMessages = array('Error!', 'Name cannot be empty.');
+			$errorMessages []= 'Name cannot be empty.';
+		}
+
+		// validation
+		$name_length = strlen($name);
+		if ($name_length > 7){
+			$errorMessages []=
+				"Maximum 7 characters allowed. $name is $name_length.";
+		}
+
+		// validation
+		if (!empty($errorMessages)){
 			$formattedBlock = $formatter->formatBlock($errorMessages, 'error');
 			$output->writeln($formattedBlock);
-			return;
+			return 1;
 		}
 
 		// generate ID
@@ -47,7 +60,7 @@ class Create extends Command {
 		)->generateString(5, $this->idchars);
 		$name = "{$name}_$id";
 
-		$output->writeln("database name: <info>[ $name ]</>");
-
+		// success
+		$output->writeln("<comment>database name:</> <info>[ $name ]</>");
 	}
 }
