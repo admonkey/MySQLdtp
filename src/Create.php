@@ -7,12 +7,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class Create extends Command {
 	protected $errorMessages;
 	protected $input;
 	protected $output;
 	protected $name;
+	protected $environment;
 	protected $idchars =
 		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -23,6 +25,11 @@ class Create extends Command {
 				'name',
 				InputArgument::OPTIONAL,
 				'What name would you like to use for the database?'
+			)->addOption(
+				'environment',
+				'e',
+				InputOption::VALUE_REQUIRED,
+				'Do you want a development, test, or production environment?'
 			);
 	}
 
@@ -32,6 +39,7 @@ class Create extends Command {
 		$formatter = $this->getHelper('formatter');
 
 		$this->getDbName();
+		$this->getEnvironment();
 
 		// validation
 		if (!empty($this->errorMessages)){
@@ -49,6 +57,7 @@ class Create extends Command {
 
 		// success
 		$output->writeln("<comment>database name:</> <info>{$this->name}</>");
+		$output->writeln("<comment>environment:</> <info>{$this->environment}</>");
 	}
 
 	protected function getDbName(){
@@ -73,5 +82,47 @@ class Create extends Command {
 			$this->errorMessages []=
 				"Maximum 7 characters allowed. {$this->name} is $name_length.";
 		}
+	}
+
+	protected function getEnvironment(){
+		$this->environment = $this->input->getOption('environment');
+		if (!$this->validateEnvironment()){
+			$helper = $this->getHelper('question');
+			$question = new ChoiceQuestion(
+				'Do you want a development, test, or production environment?',
+				array('development', 'test', 'production'),
+				'development'
+			);
+			$question->setErrorMessage('%s is invalid.');
+			$this->environment =
+				$helper->ask($this->input, $this->output, $question);
+		}
+	}
+
+	protected function validateEnvironment() : Bool {
+		if (
+			in_array(
+				strtolower($this->environment), ['development','dev','d']
+			)
+		){
+			$this->environment = 'development';
+			return true;
+		} elseif (
+			in_array(
+				strtolower($this->environment), ['test','t']
+			)
+		){
+			$this->environment = 'test';
+			return true;
+		} elseif (
+			in_array(
+				strtolower($this->environment), ['production','prod','p']
+			)
+		){
+			$this->environment = 'production';
+			return true;
+		}
+
+		return false;
 	}
 }
