@@ -56,7 +56,9 @@ class Create extends Command {
 		)->generateString(5, $this->idchars);
 
 		// success
-		$output->writeln("<comment>database name:</> <info>{$this->name}</>");
+		$output->writeln(
+			"<comment>database name:</> <info>".$this->dbName()."</>"
+		);
 		$output->writeln("<comment>environment:</> <info>{$this->environment}</>");
 	}
 
@@ -82,6 +84,12 @@ class Create extends Command {
 			$this->errorMessages []=
 				"Maximum 7 characters allowed. {$this->name} is $name_length.";
 		}
+	}
+
+	protected function dbName(){
+		return "{$this->name}_"
+			.strtoupper(substr($this->environment,0,1))
+			."_{$this->id}";
 	}
 
 	protected function getEnvironment(){
