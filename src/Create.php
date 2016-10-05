@@ -14,6 +14,7 @@ class Create extends Command {
 	protected $input;
 	protected $output;
 	protected $name;
+	protected $id;
 	protected $environment;
 	protected $idchars =
 		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -50,10 +51,9 @@ class Create extends Command {
 		}
 
 		// generate ID
-		$id = (
+		$this->id = (
 			(new \RandomLib\Factory)->getMediumStrengthGenerator()
 		)->generateString(5, $this->idchars);
-		$this->name = "{$this->name}_$id";
 
 		// success
 		$output->writeln("<comment>database name:</> <info>{$this->name}</>");
