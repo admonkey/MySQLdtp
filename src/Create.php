@@ -68,23 +68,21 @@ class Create extends Command {
 		// get database name
 		$this->name = $this->input->getArgument('name');
 		if (empty($this->name)){
-			$helper = $this->getHelper('question');
-			$question = new Question(
-				'Please enter a name for the database (max 7 characters): '
-			);
-			$this->name = $helper->ask($this->input, $this->output, $question);
-		}
+			$q = 'Please enter a name for the database (max 7 characters)';
+			$this->name = $this->io->ask($q, null, function ($name) {
+				if (empty($name)) {
+					throw new \RuntimeException('Name cannot be empty.');
+				}
 
-		// validation
-		if (empty($this->name)){
-			$this->errorMessages []= 'Name cannot be empty.';
-		}
+				$name_length = strlen($name);
+				if ($name_length > 7){
+					throw new \RuntimeException(
+						"Maximum 7 characters allowed. $name is $name_length."
+					);
+				}
 
-		// validation
-		$name_length = strlen($this->name);
-		if ($name_length > 7){
-			$this->errorMessages []=
-				"Maximum 7 characters allowed. {$this->name} is $name_length.";
+				return $name;
+			});
 		}
 
 		$this->output->writeln("<comment>name:</> <info>".$this->dbName()."</>");
