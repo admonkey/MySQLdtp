@@ -8,11 +8,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class Create extends Command {
 	protected $errorMessages;
 	protected $input;
 	protected $output;
+	protected $io;
 	protected $name;
 	protected $id;
 	protected $environment;
@@ -37,7 +39,15 @@ class Create extends Command {
 	public function execute(InputInterface $input, OutputInterface $output){
 		$this->input = $input;
 		$this->output = $output;
+		$io = new SymfonyStyle($input, $output);
+		$this->io = $io;
 		$formatter = $this->getHelper('formatter');
+		$io->title('Create Database');
+
+		// generate ID
+		$this->id = (
+			(new \RandomLib\Factory)->getMediumStrengthGenerator()
+		)->generateString(5, $this->idchars);
 
 		$this->getDbName();
 		$this->getEnvironment();
@@ -50,16 +60,7 @@ class Create extends Command {
 			return 1;
 		}
 
-		// generate ID
-		$this->id = (
-			(new \RandomLib\Factory)->getMediumStrengthGenerator()
-		)->generateString(5, $this->idchars);
-
-		// success
-		$output->writeln(
-			"<comment>database name:</> <info>".$this->dbName()."</>"
-		);
-		$output->writeln("<comment>environment:</> <info>{$this->environment}</>");
+		$io->success('Created database: '.$this->dbName());
 	}
 
 	protected function getDbName(){
@@ -68,7 +69,7 @@ class Create extends Command {
 		if (empty($this->name)){
 			$helper = $this->getHelper('question');
 			$question = new Question(
-				'Please enter a name for the database (max 7 characters) '
+				'Please enter a name for the database (max 7 characters): '
 			);
 			$this->name = $helper->ask($this->input, $this->output, $question);
 		}
@@ -84,6 +85,9 @@ class Create extends Command {
 			$this->errorMessages []=
 				"Maximum 7 characters allowed. {$this->name} is $name_length.";
 		}
+
+		$this->output->writeln("<comment>name:</> <info>".$this->dbName()."</>");
+		$this->io->newLine();
 	}
 
 	protected function dbName(){
@@ -105,6 +109,11 @@ class Create extends Command {
 			$this->environment =
 				$helper->ask($this->input, $this->output, $question);
 		}
+
+		$this->output->writeln(
+			"<comment>environment:</> <info>{$this->environment}</>"
+		);
+		$this->io->newLine();
 	}
 
 	protected function validateEnvironment() : Bool {
