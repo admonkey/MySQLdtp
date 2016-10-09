@@ -66,27 +66,35 @@ class Create extends Command {
 
 	protected function getDbName(){
 		// get database name
-		$this->name = $this->input->getArgument('name');
-		if (empty($this->name)){
-			$q = 'Please enter a name for the database (max 7 characters)';
-			$this->name = $this->io->ask($q, null, function ($name) {
-				if (empty($name)) {
-					throw new \RuntimeException('Name cannot be empty.');
-				}
-
-				$name_length = strlen($name);
-				if ($name_length > 7){
-					throw new \RuntimeException(
-						"Maximum 7 characters allowed. $name is $name_length."
-					);
-				}
-
-				return $name;
-			});
+		$name = $this->input->getArgument('name');
+		try {
+			$this->name = $this->validateDbName($name);
+		} catch (\RuntimeException $e) {
+			if (empty($this->name)){
+				$q = 'Please enter a name for the database (max 7 characters)';
+				$this->name = $this->io->ask($q, null, function($name){
+					return $this->validateDbName($name);
+				});
+			}
 		}
 
 		$this->output->writeln("<comment>name:</> <info>".$this->dbName()."</>");
 		$this->io->newLine();
+	}
+
+	protected function validateDbName($name){
+		if (empty($name)) {
+			throw new \RuntimeException('Name cannot be empty.');
+		}
+
+		$name_length = strlen($name);
+		if ($name_length > 7){
+			throw new \RuntimeException(
+				"Maximum 7 characters allowed. $name is $name_length."
+			);
+		}
+
+		return $name;
 	}
 
 	protected function dbName(){
