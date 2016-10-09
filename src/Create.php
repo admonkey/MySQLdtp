@@ -60,6 +60,7 @@ class Create extends Command {
 			return 1;
 		}
 
+		$this->getLogin();
 		$io->success('Created database: '.$this->dbName());
 	}
 
@@ -141,5 +142,16 @@ class Create extends Command {
 		}
 
 		return false;
+	}
+
+	protected function getLogin(){
+		// validates the given answer
+		$this->io->askHidden('What is your password?', function ($password) {
+			if (empty($password)) {
+				throw new \RuntimeException('Password cannot be empty.');
+			}
+
+			return $password;
+		});
 	}
 }
