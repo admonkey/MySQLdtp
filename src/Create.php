@@ -150,14 +150,26 @@ class Create extends Command {
 		return false;
 	}
 
-	protected function getLogin(){
-		// validates the given answer
-		$this->io->askHidden('What is your password?', function ($password) {
-			if (empty($password)) {
-				throw new \RuntimeException('Password cannot be empty.');
+	protected function getLogin() : Array {
+		$q = 'What is your privileged username (e.g. root)?';
+		$username = $this->io->ask(
+			$q, null, function ($username) {
+				if (empty($username)) {
+					throw new \RuntimeException('Username cannot be empty.');
+				}
+				return $username;
 			}
+		);
 
-			return $password;
-		});
+		$password = $this->io->askHidden(
+			'What is your password?', function ($password) {
+				if (empty($password)) {
+					throw new \RuntimeException('Password cannot be empty.');
+				}
+				return $password;
+			}
+		);
+
+		return [$username,$password];
 	}
 }
