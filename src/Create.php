@@ -152,6 +152,9 @@ class Create extends Command {
 	}
 
 	protected function getLogin() : Array {
+		$q = 'What is the database hostname?';
+		$hostname = $this->io->ask($q, 'localhost');
+
 		$q = 'What is your privileged username (e.g. root)?';
 		$username = $this->io->ask(
 			$q, null, function ($username) {
@@ -171,14 +174,17 @@ class Create extends Command {
 			}
 		);
 
-		return ['username'=>$username,'password'=>$password];
+		return [
+			'hostname'=>$hostname,
+			'username'=>$username,
+			'password'=>$password
+		];
 	}
 
 	protected function executeQuery() : Bool {
-		$hostname = 'localhost';
 		extract($this->getLogin());
 		$pdo = new PDO(
-			"mysql:host=localhost;
+			"mysql:host=$hostname;
 			charset=UTF8",
 			$username,
 			$password
