@@ -1,6 +1,7 @@
 <?php
 namespace jpuck\dbdtp;
 
+use PDO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -60,7 +61,7 @@ class Create extends Command {
 			return 1;
 		}
 
-		$this->getLogin();
+		$this->executeQuery();
 		$io->success('Created database: '.$this->dbName());
 	}
 
@@ -170,6 +171,19 @@ class Create extends Command {
 			}
 		);
 
-		return [$username,$password];
+		return ['username'=>$username,'password'=>$password];
+	}
+
+	protected function executeQuery() : Bool {
+		$hostname = 'localhost';
+		extract($this->getLogin());
+		$pdo = new PDO(
+			"mysql:host=localhost;
+			charset=UTF8",
+			$username,
+			$password
+		);
+		$pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+		return true;
 	}
 }
