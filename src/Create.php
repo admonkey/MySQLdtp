@@ -155,18 +155,11 @@ class Create extends Command {
 		$q = 'What is the database hostname?';
 		$hostname = $this->io->ask($q, 'localhost');
 
-		$q = 'What is your privileged username (e.g. root)?';
-		$username = $this->io->ask(
-			$q, null, function ($username) {
-				if (empty($username)) {
-					throw new \RuntimeException('Username cannot be empty.');
-				}
-				return $username;
-			}
-		);
+		$q = 'What is the privileged username?';
+		$username = $this->io->ask($q, 'root');
 
 		$password = $this->io->askHidden(
-			'What is your password?', function ($password) {
+			'What is the password?', function ($password) {
 				if (empty($password)) {
 					throw new \RuntimeException('Password cannot be empty.');
 				}
