@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use jpuck\dbdtp\Container as App;
 
 class Create extends Command {
 	protected $errorMessages;
@@ -42,7 +43,10 @@ class Create extends Command {
 		$this->output = $output;
 		$io = new SymfonyStyle($input, $output);
 		$this->io = $io;
-		$formatter = $this->getHelper('formatter');
+		App::bind('input', $input);
+		App::bind('output', $output);
+		App::bind('io', $io);
+
 		$io->title('Create Database');
 
 		// generate ID
@@ -50,10 +54,11 @@ class Create extends Command {
 			(new \RandomLib\Factory)->getMediumStrengthGenerator()
 		)->generateString(5, $this->idchars);
 
-		$this->getDbName();
+		$dbname = new Name;
 		$this->getEnvironment();
 
 		// validation
+		$formatter = $this->getHelper('formatter');
 		if (!empty($this->errorMessages)){
 			$formattedBlock = $formatter
 				->formatBlock($this->errorMessages, 'error');
@@ -62,46 +67,7 @@ class Create extends Command {
 		}
 
 		$this->executeQuery();
-		$io->success('Created database: '.$this->dbName());
-	}
-
-	protected function getDbName(){
-		// get database name
-		$name = $this->input->getArgument('name');
-		try {
-			$this->name = $this->validateDbName($name);
-		} catch (\RuntimeException $e) {
-			if (empty($this->name)){
-				$q = 'Please enter a name for the database (max 7 characters)';
-				$this->name = $this->io->ask($q, null, function($name){
-					return $this->validateDbName($name);
-				});
-			}
-		}
-
-		$this->output->writeln("<comment>name:</> <info>".$this->dbName()."</>");
-		$this->io->newLine();
-	}
-
-	protected function validateDbName($name){
-		if (empty($name)) {
-			throw new \RuntimeException('Name cannot be empty.');
-		}
-
-		$name_length = strlen($name);
-		if ($name_length > 7){
-			throw new \RuntimeException(
-				"Maximum 7 characters allowed. $name is $name_length."
-			);
-		}
-
-		return $name;
-	}
-
-	protected function dbName(){
-		return "{$this->name}_"
-			.strtoupper(substr($this->environment,0,1))
-			."_{$this->id}";
+		$io->success('Created database: '.$dbname->get());
 	}
 
 	protected function getEnvironment(){
