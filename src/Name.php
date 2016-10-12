@@ -1,7 +1,6 @@
 <?php
 namespace jpuck\dbdtp;
 use RuntimeException;
-use jpuck\dbdtp\Container as App;
 
 class Name {
 	public function __construct(){
