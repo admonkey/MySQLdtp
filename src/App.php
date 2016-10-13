@@ -10,6 +10,9 @@ class App {
 	}
 	public static function get($key){
 		if(!array_key_exists($key, static::$registry)){
+			if(!class_exists($key)){
+				return null;
+			}
 			static::$registry[$key] = new $key;
 		}
 		return static::$registry[$key];
