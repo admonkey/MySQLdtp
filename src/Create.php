@@ -53,7 +53,7 @@ class Create extends Command {
 			(new \RandomLib\Factory)->getMediumStrengthGenerator()
 		)->generateString(5, $this->idchars);
 
-		$dbname = new Name;
+		App::get(Name::class);
 		$this->getEnvironment();
 
 		// validation
