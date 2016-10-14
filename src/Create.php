@@ -38,8 +38,6 @@ class Create extends Command {
 			->title('Create Database');
 
 		App::get(Name::class);
-		$this->getEnvironment();
-
 		// validation
 		$formatter = $this->getHelper('formatter');
 		if (!empty($this->errorMessages)){
@@ -51,53 +49,6 @@ class Create extends Command {
 
 		$this->executeQuery();
 		$io->success('Created database: '.App::get(Name::class)->database());
-	}
-
-	protected function getEnvironment(){
-		$this->environment = $this->input->getOption('environment');
-		if (!$this->validateEnvironment()){
-			$helper = $this->getHelper('question');
-			$question = new ChoiceQuestion(
-				'Do you want a development, test, or production environment?',
-				array('development', 'test', 'production'),
-				'development'
-			);
-			$question->setErrorMessage('%s is invalid.');
-			$this->environment =
-				$helper->ask($this->input, $this->output, $question);
-		}
-
-		$this->output->writeln(
-			"<comment>environment:</> <info>{$this->environment}</>"
-		);
-		$this->io->newLine();
-	}
-
-	protected function validateEnvironment() : Bool {
-		if (
-			in_array(
-				strtolower($this->environment), ['development','dev','d']
-			)
-		){
-			$this->environment = 'development';
-			return true;
-		} elseif (
-			in_array(
-				strtolower($this->environment), ['test','t']
-			)
-		){
-			$this->environment = 'test';
-			return true;
-		} elseif (
-			in_array(
-				strtolower($this->environment), ['production','prod','p']
-			)
-		){
-			$this->environment = 'production';
-			return true;
-		}
-
-		return false;
 	}
 
 	protected function getLogin() : Array {
