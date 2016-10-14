@@ -110,7 +110,7 @@ class Create extends Command {
 		$q = 'What is the privileged username?';
 		$username = App::get('io')->ask($q, 'root');
 
-		$password = $this->io->askHidden(
+		$password = App::get('io')->askHidden(
 			'What is the password?', function ($password) {
 				if (empty($password)) {
 					throw new \RuntimeException('Password cannot be empty.');

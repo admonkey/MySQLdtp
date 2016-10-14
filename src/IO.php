@@ -29,7 +29,7 @@ class IO {
 		$this->style->newLine();
 	}
 
-	public function ask(...$opts){
-		$this->style->ask(...$opts);
+	public function __call($name, $arguments){
+		$this->style->$name(...$arguments);
 	}
 }
