@@ -41,9 +41,8 @@ class Name {
 	public function database(){
 		$name = App::get('name');
 		$env  = App::get('environment');
+		$env  = strtoupper(substr($env,0,1));
 		$id   = App::get('id');
-		return "{$name}_"
-			.strtoupper(substr($env,0,1))
-			."_$id";
+		return "{$name}_{$env}_{$id}";
 	}
 }
