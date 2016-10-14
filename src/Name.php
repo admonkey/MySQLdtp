@@ -7,12 +7,12 @@ class Name {
 		// get database name
 		$name = App::get('input')->getArgument('name');
 		try {
-			$name = $this->validateDbName($name);
+			$name = $this->validate($name);
 		} catch (RuntimeException $e) {
 			if (empty($name)){
 				$q = 'Please enter a name for the database (max 7 characters)';
 				$name = App::get('io')->ask($q, null, function($name){
-					return $this->validateDbName($name);
+					return $this->validate($name);
 				});
 			}
 		}
@@ -23,7 +23,7 @@ class Name {
 		App::get('io')->newLine();
 	}
 
-	protected function validateDbName($name){
+	protected function validate($name){
 		if (empty($name)) {
 			throw new RuntimeException('Name cannot be empty.');
 		}
