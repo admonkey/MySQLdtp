@@ -40,7 +40,9 @@ class Create extends Command {
 		App::get(Name::class);
 
 		$this->executeQuery();
-		$io->success('Created database: '.App::get(Name::class)->database());
+		App::get('io')->success(
+			'Created database: '.App::get(Name::class)->database()
+		);
 	}
 
 	protected function getLogin() : Array {
