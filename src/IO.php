@@ -20,10 +20,6 @@ class IO {
 		$this->style = new SymfonyStyle($in, $out);
 	}
 
-	public function title(String $title){
-		return $this->style->title($title);
-	}
-
 	public function write(String $msg){
 		$this->style->writeln($msg);
 		$this->style->newLine();
