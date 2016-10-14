@@ -8,7 +8,7 @@ class Name {
 
 	public function __construct(){
 		// get database name
-		$name = App::get('input')->getArgument('name');
+		$name = App::get('io')->getArgument('name');
 		try {
 			$name = $this->validate($name);
 		} catch (RuntimeException $e) {

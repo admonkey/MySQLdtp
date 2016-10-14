@@ -20,6 +20,10 @@ class IO {
 		$this->style = new SymfonyStyle($in, $out);
 	}
 
+	public function getArgument(...$arguments){
+		return $this->in->getArgument(...$arguments);
+	}
+
 	public function write(String $msg){
 		$this->style->writeln($msg);
 		$this->style->newLine();
