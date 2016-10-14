@@ -34,9 +34,8 @@ class Create extends Command {
 	}
 
 	public function execute(InputInterface $input, OutputInterface $output){
-		App::bind('io', new IO($this, $input, $output));
-
-		App::get('io')->title('Create Database');
+		App::bind('io', new IO($this, $input, $output))
+			->title('Create Database');
 
 		App::get(Name::class);
 		$this->getEnvironment();
