@@ -27,8 +27,7 @@ class Name {
 		)->generateString(5, $this->idchars));
 
 		$name = $this->database();
-		App::get('io')->writeln("<comment>name:</> <info>$name</>");
-		App::get('io')->newLine();
+		App::get('io')->write("<comment>name:</> <info>$name</>");
 	}
 
 	protected function validate($name){
