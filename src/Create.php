@@ -37,12 +37,10 @@ class Create extends Command {
 		App::bind('io', new IO($this, $input, $output))
 			->title('Create Database');
 
-		App::get(Name::class);
+		$name = App::get(Name::class)->database();
 
 		$this->executeQuery();
-		App::get('io')->success(
-			'Created database: '.App::get(Name::class)->database()
-		);
+		App::get('io')->success("Created database: $name");
 	}
 
 	protected function getLogin() : Array {
