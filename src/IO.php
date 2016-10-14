@@ -24,6 +24,10 @@ class IO {
 		return $this->in->getArgument(...$arguments);
 	}
 
+	public function getOption(...$arguments){
+		return $this->in->getOption(...$arguments);
+	}
+
 	public function write(String $msg){
 		$this->style->writeln($msg);
 		$this->style->newLine();

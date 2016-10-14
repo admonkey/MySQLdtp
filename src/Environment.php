@@ -6,7 +6,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class Environment {
 	public function __construct(){
-		$environment = App::get('input')->getOption('environment');
+		$environment = App::get('io')->getOption('environment');
 		if (!$this->validate($environment)){
 			$helper = new Question;
 			$question = new ChoiceQuestion(
