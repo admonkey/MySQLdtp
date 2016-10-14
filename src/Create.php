@@ -66,7 +66,7 @@ class Create extends Command {
 		}
 
 		$this->executeQuery();
-		$io->success('Created database: '.$dbname->get());
+		$io->success('Created database: '.App::get(Name::class)->database());
 	}
 
 	protected function getEnvironment(){

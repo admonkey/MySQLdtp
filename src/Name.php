@@ -18,7 +18,7 @@ class Name {
 		}
 		App::bind('name', $name);
 
-		$name = $this->get();
+		$name = $this->database();
 		App::get('io')->writeln("<comment>name:</> <info>$name</>");
 		App::get('io')->newLine();
 	}
@@ -38,7 +38,7 @@ class Name {
 		return $name;
 	}
 
-	public function get(){
+	public function database(){
 		$name = App::get('name');
 		$env  = App::get('environment');
 		$id   = App::get('id');
