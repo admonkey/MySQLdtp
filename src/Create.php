@@ -38,14 +38,6 @@ class Create extends Command {
 			->title('Create Database');
 
 		App::get(Name::class);
-		// validation
-		$formatter = $this->getHelper('formatter');
-		if (!empty($this->errorMessages)){
-			$formattedBlock = $formatter
-				->formatBlock($this->errorMessages, 'error');
-			$output->writeln($formattedBlock);
-			return 1;
-		}
 
 		$this->executeQuery();
 		$io->success('Created database: '.App::get(Name::class)->database());
