@@ -20,6 +20,7 @@ class Name {
 			}
 		}
 		App::bind('name', $name);
+		App::get(Environment::class);
 
 		// generate ID
 		App::bind('id', (

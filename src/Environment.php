@@ -4,7 +4,7 @@ use RuntimeException;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
-class Name {
+class Environment {
 	public function __construct(){
 		$environment = App::get('input')->getOption('environment');
 		if (!$this->validate($environment)){
