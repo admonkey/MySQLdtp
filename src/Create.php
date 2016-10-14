@@ -38,7 +38,7 @@ class Create extends Command {
 		App::bind('input', $input);
 		App::bind('output', $output);
 
-		$io->title('Create Database');
+		App::get('io')->title('Create Database');
 
 		App::get(Name::class);
 		$this->getEnvironment();
