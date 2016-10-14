@@ -7,6 +7,8 @@ class Name {
 		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 	public function __construct(){
+		App::get(Environment::class);
+
 		// get database name
 		$name = App::get('io')->getArgument('name');
 		try {
@@ -20,7 +22,6 @@ class Name {
 			}
 		}
 		App::bind('name', $name);
-		App::get(Environment::class);
 
 		// generate ID
 		App::bind('id', (

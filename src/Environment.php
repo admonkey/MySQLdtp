@@ -1,31 +1,29 @@
 <?php
 namespace jpuck\dbdtp;
 use RuntimeException;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class Environment {
 	public function __construct(){
-		$environment = App::get('io')->getOption('environment');
-		if (!$this->validate($environment)){
-			$helper = new Question;
+		if (!$this->validate(App::get('io')->getOption('environment'))){
 			$question = new ChoiceQuestion(
 				'Do you want a development, test, or production environment?',
-				array('development', 'test', 'production'),
+				['development', 'test', 'production'],
 				'development'
 			);
 			$question->setErrorMessage('%s is invalid.');
-			$environment =
-				$helper->ask($this->input, $this->output, $question);
+			$this->validate(App::get('io')->question($question));
 		}
+		$environment = App::get('environment');
 
-		$this->output->writeln(
-			"<comment>environment:</> <info>{$this->environment}</>"
-		);
-		$this->io->newLine();
+		App::get('io')->write("<comment>environment:</> <info>$environment</>");
 	}
 
-	protected function validate(String $environment) : Bool {
+	protected function validate(String $environment = null) : Bool {
+		if(empty($environment)){
+			return false;
+		}
+
 		if (
 			in_array(
 				strtolower($environment), ['development','dev','d']

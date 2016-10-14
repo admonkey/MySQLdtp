@@ -20,6 +20,11 @@ class IO {
 		$this->style = new SymfonyStyle($in, $out);
 	}
 
+	public function question($question){
+		$helper = $this->cmd->getHelper('question');
+		return $helper->ask($this->in, $this->out, $question);
+	}
+
 	public function getArgument(...$arguments){
 		return $this->in->getArgument(...$arguments);
 	}
