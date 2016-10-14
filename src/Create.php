@@ -49,9 +49,9 @@ class Create extends Command {
 		$io->title('Create Database');
 
 		// generate ID
-		$this->id = (
+		App::bind('id', (
 			(new \RandomLib\Factory)->getMediumStrengthGenerator()
-		)->generateString(5, $this->idchars);
+		)->generateString(5, $this->idchars));
 
 		App::get(Name::class);
 		$this->getEnvironment();
