@@ -30,6 +30,6 @@ class IO {
 	}
 
 	public function __call($name, $arguments){
-		$this->style->$name(...$arguments);
+		return $this->style->$name(...$arguments);
 	}
 }
