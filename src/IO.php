@@ -28,4 +28,8 @@ class IO {
 		$this->style->writeln($msg);
 		$this->style->newLine();
 	}
+
+	public function ask(...$opts){
+		$this->style->ask(...$opts);
+	}
 }

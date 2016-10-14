@@ -105,10 +105,10 @@ class Create extends Command {
 
 	protected function getLogin() : Array {
 		$q = 'What is the database hostname?';
-		$hostname = $this->io->ask($q, 'localhost');
+		$hostname = App::get('io')->ask($q, 'localhost');
 
 		$q = 'What is the privileged username?';
-		$username = $this->io->ask($q, 'root');
+		$username = App::get('io')->ask($q, 'root');
 
 		$password = $this->io->askHidden(
 			'What is the password?', function ($password) {
