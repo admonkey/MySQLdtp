@@ -34,12 +34,9 @@ class Create extends Command {
 	}
 
 	public function execute(InputInterface $input, OutputInterface $output){
-		$io = App::bind('io', new IO($this, $input, $output));
-		$io = new SymfonyStyle($input, $output);
-		$this->io = $io;
+		App::bind('io', new IO($this, $input, $output));
 		App::bind('input', $input);
 		App::bind('output', $output);
-		App::bind('io', $io);
 
 		$io->title('Create Database');
 
