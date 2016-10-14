@@ -13,8 +13,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class Create extends Command {
 	protected $errorMessages;
-	protected $input;
-	protected $output;
 	protected $io;
 	protected $name;
 	protected $id;
@@ -36,8 +34,7 @@ class Create extends Command {
 	}
 
 	public function execute(InputInterface $input, OutputInterface $output){
-		$this->input = $input;
-		$this->output = $output;
+		$io = App::bind('io', new IO($this, $input, $output));
 		$io = new SymfonyStyle($input, $output);
 		$this->io = $io;
 		App::bind('input', $input);
