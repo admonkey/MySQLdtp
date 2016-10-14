@@ -19,8 +19,6 @@ class Create extends Command {
 	protected $name;
 	protected $id;
 	protected $environment;
-	protected $idchars =
-		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 	protected function configure(){
 		$this->setName('create')
@@ -47,11 +45,6 @@ class Create extends Command {
 		App::bind('io', $io);
 
 		$io->title('Create Database');
-
-		// generate ID
-		App::bind('id', (
-			(new \RandomLib\Factory)->getMediumStrengthGenerator()
-		)->generateString(5, $this->idchars));
 
 		App::get(Name::class);
 		$this->getEnvironment();
