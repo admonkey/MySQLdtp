@@ -8,8 +8,15 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class IO {
+	protected $cmd;
+	protected $in;
+	protected $out;
 	protected $style;
+
 	public function __construct(Command $cmd, InputInterface $in, OutputInterface $out){
+		$this->cmd = $cmd;
+		$this->in  = $in;
+		$this->out = $out;
 		$this->style = new SymfonyStyle($in, $out);
 	}
 
