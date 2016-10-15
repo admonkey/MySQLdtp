@@ -1,7 +1,6 @@
 <?php
 namespace jpuck\dbdtp;
 
-use PDO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -39,42 +38,7 @@ class Create extends Command {
 
 		$name = App::get(Name::class)->database();
 
-		$this->executeQuery();
+		App::get(Query::class)->execute('SELECT 1');
 		App::get('io')->success("Created database: $name");
-	}
-
-	protected function getLogin() : Array {
-		$q = 'What is the database hostname?';
-		$hostname = App::get('io')->ask($q, 'localhost');
-
-		$q = 'What is the privileged username?';
-		$username = App::get('io')->ask($q, 'root');
-
-		$password = App::get('io')->askHidden(
-			'What is the password?', function ($password) {
-				if (empty($password)) {
-					throw new \RuntimeException('Password cannot be empty.');
-				}
-				return $password;
-			}
-		);
-
-		return [
-			'hostname'=>$hostname,
-			'username'=>$username,
-			'password'=>$password
-		];
-	}
-
-	protected function executeQuery() : Bool {
-		extract($this->getLogin());
-		$pdo = new PDO(
-			"mysql:host=$hostname;
-			charset=UTF8",
-			$username,
-			$password
-		);
-		$pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-		return true;
 	}
 }
