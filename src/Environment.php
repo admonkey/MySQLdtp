@@ -5,7 +5,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class Environment {
 	public function __construct(){
-		if (!$this->validate(App::get('io')->getOption('environment'))){
+		if (!$this->validate(App::get('in')->getOption('environment'))){
 			$question = new ChoiceQuestion(
 				'Do you want a development, test, or production environment?',
 				['development', 'test', 'production'],

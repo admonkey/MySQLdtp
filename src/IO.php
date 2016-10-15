@@ -17,20 +17,14 @@ class IO {
 		$this->cmd = $cmd;
 		$this->in  = $in;
 		$this->out = $out;
+		App::bind('in',$in);
+		App::bind('out',$out);
 		$this->style = new SymfonyStyle($in, $out);
 	}
 
 	public function question($question){
 		$helper = $this->cmd->getHelper('question');
 		return $helper->ask($this->in, $this->out, $question);
-	}
-
-	public function getArgument(...$arguments){
-		return $this->in->getArgument(...$arguments);
-	}
-
-	public function getOption(...$arguments){
-		return $this->in->getOption(...$arguments);
 	}
 
 	public function write(String $msg){

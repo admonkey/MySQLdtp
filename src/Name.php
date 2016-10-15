@@ -10,7 +10,7 @@ class Name {
 		App::get(Environment::class);
 
 		// get database name
-		$name = App::get('io')->getArgument('name');
+		$name = App::get('in')->getArgument('name');
 		try {
 			$name = $this->validate($name);
 		} catch (RuntimeException $e) {
