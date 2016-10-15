@@ -18,5 +18,6 @@ Database Dev/Test/Prod';
 $app = new Application($logo,'2.0-dev');
 
 $app->add(new Create);
+$app->add(new Drop);
 
 $app->run();
