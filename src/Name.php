@@ -1,30 +1,38 @@
 <?php
 namespace jpuck\dbdtp;
 use RuntimeException;
-use jpuck\dbdtp\Container as App;
 
 class Name {
+	protected $idchars =
+		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 	public function __construct(){
+		App::get(Environment::class);
+
 		// get database name
-		$name = App::get('input')->getArgument('name');
+		$name = App::get('in')->getArgument('name');
 		try {
-			$name = $this->validateDbName($name);
+			$name = $this->validate($name);
 		} catch (RuntimeException $e) {
 			if (empty($name)){
 				$q = 'Please enter a name for the database (max 7 characters)';
 				$name = App::get('io')->ask($q, null, function($name){
-					return $this->validateDbName($name);
+					return $this->validate($name);
 				});
 			}
 		}
 		App::bind('name', $name);
 
-		$name = $this->get();
-		App::get('io')->writeln("<comment>name:</> <info>$name</>");
-		App::get('io')->newLine();
+		// generate ID
+		App::bind('id', (
+			(new \RandomLib\Factory)->getMediumStrengthGenerator()
+		)->generateString(5, $this->idchars));
+
+		$name = $this->database();
+		App::get('io')->write("<comment>name:</> <info>$name</>");
 	}
 
-	protected function validateDbName($name){
+	protected function validate($name){
 		if (empty($name)) {
 			throw new RuntimeException('Name cannot be empty.');
 		}
@@ -39,12 +47,11 @@ class Name {
 		return $name;
 	}
 
-	public function get(){
+	public function database(){
 		$name = App::get('name');
 		$env  = App::get('environment');
+		$env  = strtoupper(substr($env,0,1));
 		$id   = App::get('id');
-		return "{$name}_"
-			.strtoupper(substr($env,0,1))
-			."_$id";
+		return "{$name}_{$env}_{$id}";
 	}
 }
