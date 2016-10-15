@@ -1,6 +1,5 @@
 <?php
 namespace jpuck\dbdtp;
-use RuntimeException;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class Environment {

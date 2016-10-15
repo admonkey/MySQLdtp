@@ -1,6 +1,5 @@
 <?php
 namespace jpuck\dbdtp;
-use Exception;
 
 // http://stackoverflow.com/q/3715518/4233593
 class App {
