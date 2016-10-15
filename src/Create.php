@@ -35,11 +35,10 @@ class Create extends Command {
 	}
 
 	protected function sql(String $name){
-		$sql = "
+		return "
 			CREATE DATABASE $name
 			CHARACTER SET utf8
 			COLLATE utf8_unicode_ci;
 		";
-		return $sql;
 	}
 }
