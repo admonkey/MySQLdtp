@@ -58,7 +58,7 @@ class Name {
 		$env  = App::get('Environment');
 		$env  = strtoupper(substr($env,0,1));
 		$id   = App::get('id');
-		return "{$name}_{$env}_{$id}";
+		return $name."_$env$id";
 	}
 
 	public function __toString(){
