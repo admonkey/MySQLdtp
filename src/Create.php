@@ -30,7 +30,7 @@ class Create extends Command {
 
 	public function execute(InputInterface $input, OutputInterface $output){
 		App::bind('io', new IO($this, $input, $output))
-			->title('Create Database');
+			->title('Create');
 
 		$data['database'] = $database = App::get('Name')->database();
 		$data['password'] = (new Random)->password();

@@ -25,7 +25,7 @@ class Drop extends Command {
 
 	public function execute(InputInterface $input, OutputInterface $output){
 		App::bind('io', new IO($this, $input, $output))
-			->title('Drop Database');
+			->title('Drop');
 
 		$name = App::get('in')->getArgument('name');
 
