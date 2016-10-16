@@ -7,6 +7,7 @@ class Random {
 	protected $alphanumeric =
 		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	protected $special = '`~!@#$%^&*()-_+=;:<,>.?/ {[|\]}';
+	protected $factory;
 
 	public function id(Int $length = 5) : String {
 		$chars = $this->alphanumeric;
@@ -20,7 +21,8 @@ class Random {
 	}
 
 	protected function generate(Int $length, String $chars) : String {
-		return (new Factory)->getMediumStrengthGenerator()
+		return ($this->factory ?? $this->factory = new Factory)
+			->getMediumStrengthGenerator()
 			->generateString($length, $chars);
 	}
 }
