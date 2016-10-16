@@ -43,18 +43,14 @@ class Name {
 	}
 
 	public function user(){
-		$name = $this->name;
+		$name = $this->database();
 		switch (App::get('Environment')) {
 			case 'development':
-				$env  = 'A';
-				break;
+				return "{$name}_A";
 			// TODO: case 'test':
 			case 'production':
-				$env  = 'E';
-				break;
+				return "{$name}_E";
 		}
-		$id = App::get('id');
-		return "{$name}_U{$env}_{$id}";
 	}
 
 	public function database(){
