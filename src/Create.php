@@ -33,6 +33,7 @@ class Create extends Command {
 			->title('Create');
 
 		$data['database'] = $database = App::get('Name')->database();
+		$data['username'] = App::get('Name')->user();
 		$data['password'] = (new Random)->password();
 
 		if( App::get('Query')->execute($this->sql($data)) ){
@@ -42,10 +43,14 @@ class Create extends Command {
 
 	protected function sql(Array $data){
 		extract($data);
+		$hostname = App::get('Hostname');
 		return "
 			CREATE DATABASE $database
 			CHARACTER SET utf8
 			COLLATE utf8_unicode_ci;
+
+			CREATE USER '$username'@'$hostname'
+			IDENTIFIED BY '$password';
 		";
 	}
 }
