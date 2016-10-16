@@ -5,8 +5,6 @@ use RuntimeException;
 class Name {
 	protected $name;
 	public function __construct(String $name = null){
-		App::get(Environment::class);
-
 		// get database name
 		if(empty($name)){
 			$name = App::get('in')->getArgument('name');
@@ -46,7 +44,7 @@ class Name {
 
 	public function user(){
 		$name = $this->name;
-		switch (App::get('environment')) {
+		switch (App::get('Environment')) {
 			case 'development':
 				$env  = 'A';
 				break;
@@ -61,7 +59,7 @@ class Name {
 
 	public function database(){
 		$name = $this->name;
-		$env  = App::get('environment');
+		$env  = App::get('Environment');
 		$env  = strtoupper(substr($env,0,1));
 		$id   = App::get('id');
 		return "{$name}_{$env}_{$id}";

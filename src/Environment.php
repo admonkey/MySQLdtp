@@ -3,6 +3,7 @@ namespace jpuck\dbdtp;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class Environment {
+	protected $environment;
 	public function __construct(){
 		if (!$this->validate(App::get('in')->getOption('environment'))){
 			$question = new ChoiceQuestion(
@@ -13,9 +14,10 @@ class Environment {
 			$question->setErrorMessage('%s is invalid.');
 			$this->validate(App::get('io')->question($question));
 		}
-		$environment = App::get('environment');
 
-		App::get('io')->write("<comment>environment:</> <info>$environment</>");
+		App::get('io')->write(
+			"<comment>environment:</> <info>{$this->environment}</>"
+		);
 	}
 
 	protected function validate(String $environment = null) : Bool {
@@ -25,18 +27,22 @@ class Environment {
 
 		switch(strtolower($environment)[0]){
 			case 'd':
-				App::bind('environment','development');
+				$this->environment = 'development';
 				break;
 			case 't':
-				App::bind('environment','test');
+				$this->environment = 'test';
 				break;
 			case 'p':
-				App::bind('environment','production');
+				$this->environment = 'production';
 				break;
 			default:
 				return false;
 		}
 
 		return true;
+	}
+
+	public function __toString(){
+		return $this->environment;
 	}
 }
