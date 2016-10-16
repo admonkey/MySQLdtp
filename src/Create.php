@@ -32,12 +32,12 @@ class Create extends Command {
 		App::bind('io', new IO($this, $input, $output))
 			->title('Create');
 
-		$data['database'] = $database = App::get('Name')->database();
+		$data['database'] = App::get('Name')->database();
 		$data['username'] = App::get('Name')->user();
 		$data['password'] = App::get('Random')->password();
 
 		if( App::get('Query')->execute($this->sql($data)) ){
-			App::get('io')->success("Created database: $database");
+			App::get('io')->success("Created database: $data[database]");
 		}
 	}
 
