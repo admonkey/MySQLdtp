@@ -11,16 +11,22 @@ class App {
 	public static function get($key){
 		if(!array_key_exists($key, static::$registry)){
 			if(!class_exists($key)){
-				return null;
+				if(!class_exists(__NAMESPACE__."\\$key")){
+					return null;
+				}
+				$class = __NAMESPACE__."\\$key";
 			}
+			$class = $class ?? $key;
 
 			// dynamically create instance
-			static::$registry[$key] = new $key;
+			static::$registry[$key] = new $class;
 
 			// set short alias if namespaced
-			// http://stackoverflow.com/a/27457689/4233593
-			if($name = substr(strrchr($key, '\\'), 1)){
-				static::$registry[$name] =& static::$registry[$key];
+			if($key === $class){
+				// http://stackoverflow.com/a/27457689/4233593
+				if($name = substr(strrchr($key, '\\'), 1)){
+					static::$registry[$name] =& static::$registry[$key];
+				}
 			}
 		}
 		return static::$registry[$key];

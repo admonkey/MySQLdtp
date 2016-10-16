@@ -3,22 +3,24 @@ namespace jpuck\dbdtp;
 use RuntimeException;
 
 class Name {
-	public function __construct(){
+	protected $name;
+	public function __construct(String $name = null){
 		App::get(Environment::class);
 
 		// get database name
-		$name = App::get('in')->getArgument('name');
+		if(empty($name)){
+			$name = App::get('in')->getArgument('name');
+		}
+
 		try {
 			$name = $this->validate($name);
 		} catch (RuntimeException $e) {
-			if (empty($name)){
-				$q = 'Please enter a name for the database (max 7 characters)';
-				$name = App::get('io')->ask($q, null, function($name){
-					return $this->validate($name);
-				});
-			}
+			$q = 'Please enter a name for the database (max 7 characters)';
+			$name = App::get('io')->ask($q, null, function($name){
+				return $this->validate($name);
+			});
 		}
-		App::bind('name', $name);
+		$this->name = $name;
 
 		// generate ID
 		App::bind('id', (new Random)->id());
@@ -43,10 +45,14 @@ class Name {
 	}
 
 	public function database(){
-		$name = App::get('name');
+		$name = $this->name;
 		$env  = App::get('environment');
 		$env  = strtoupper(substr($env,0,1));
 		$id   = App::get('id');
 		return "{$name}_{$env}_{$id}";
+	}
+
+	public function __toString(){
+		return $this->name;
 	}
 }

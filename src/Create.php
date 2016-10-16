@@ -20,6 +20,11 @@ class Create extends Command {
 				'e',
 				InputOption::VALUE_REQUIRED,
 				'Do you want a development, test, or production environment?'
+			)->addOption(
+				'hostname',
+				'H',
+				InputOption::VALUE_REQUIRED,
+				'What is the database server hostname?'
 			);
 	}
 
@@ -27,10 +32,10 @@ class Create extends Command {
 		App::bind('io', new IO($this, $input, $output))
 			->title('Create Database');
 
-		$data['database'] = $database = App::get(Name::class)->database();
+		$data['database'] = $database = App::get('Name')->database();
 		$data['password'] = (new Random)->password();
 
-		if( App::get(Query::class)->execute($this->sql($data)) ){
+		if( App::get('Query')->execute($this->sql($data)) ){
 			App::get('io')->success("Created database: $database");
 		}
 	}

@@ -4,18 +4,16 @@ use PDO;
 use RuntimeException;
 
 class Query {
-	protected $hostname;
-	protected $username;
-	protected $password;
 	protected $pdo;
 
 	public function __construct(){
-		$this->getLogin();
+		$hostname = App::get('Hostname');
+		extract($this->getLogin());
 		$this->pdo = new PDO(
-			"mysql:host={$this->hostname};
+			"mysql:host=$hostname;
 			charset=UTF8",
-			$this->username,
-			$this->password
+			$username,
+			$password
 		);
 		$this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 	}
@@ -24,20 +22,20 @@ class Query {
 		return $this->pdo->query($sql)->closeCursor();
 	}
 
-	protected function getLogin(){
-		$q = 'What is the server hostname?';
-		$this->hostname = App::get('io')->ask($q, 'localhost');
+	protected function getLogin() : Array {
+		$login['username'] = App::get('io')->ask(
+			'What is the privileged username?', 'root'
+		);
 
-		$q = 'What is the privileged username?';
-		$this->username = App::get('io')->ask($q, 'root');
-
-		$this->password = App::get('io')->askHidden(
+		$login['password'] = App::get('io')->askHidden(
 			'What is the password?', function ($password) {
 				if (empty($password)) {
-					throw new \RuntimeException('Password cannot be empty.');
+					throw new RuntimeException('Password cannot be empty.');
 				}
 				return $password;
 			}
 		);
+
+		return $login;
 	}
 }
