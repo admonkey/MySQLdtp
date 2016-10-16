@@ -23,29 +23,20 @@ class Environment {
 			return false;
 		}
 
-		if (
-			in_array(
-				strtolower($environment), ['development','dev','d']
-			)
-		){
-			App::bind('environment','development');
-			return true;
-		} elseif (
-			in_array(
-				strtolower($environment), ['test','t']
-			)
-		){
-			App::bind('environment','test');
-			return true;
-		} elseif (
-			in_array(
-				strtolower($environment), ['production','prod','p']
-			)
-		){
-			App::bind('environment','production');
-			return true;
+		switch(strtolower($environment)[0]){
+			case 'd':
+				App::bind('environment','development');
+				break;
+			case 't':
+				App::bind('environment','test');
+				break;
+			case 'p':
+				App::bind('environment','production');
+				break;
+			default:
+				return false;
 		}
 
-		return false;
+		return true;
 	}
 }
