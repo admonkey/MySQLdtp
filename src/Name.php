@@ -3,9 +3,6 @@ namespace jpuck\dbdtp;
 use RuntimeException;
 
 class Name {
-	protected $idchars =
-		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
 	public function __construct(){
 		App::get(Environment::class);
 
@@ -24,9 +21,7 @@ class Name {
 		App::bind('name', $name);
 
 		// generate ID
-		App::bind('id', (
-			(new \RandomLib\Factory)->getMediumStrengthGenerator()
-		)->generateString(5, $this->idchars));
+		App::bind('id', (new Random)->id());
 
 		$name = $this->database();
 		App::get('io')->write("<comment>name:</> <info>$name</>");

@@ -27,16 +27,17 @@ class Create extends Command {
 		App::bind('io', new IO($this, $input, $output))
 			->title('Create Database');
 
-		$name = App::get(Name::class)->database();
+		$data['name'] = App::get(Name::class)->database();
+		$data['pass'] = (new Random)->password();
 
-		if( App::get(Query::class)->execute($this->sql($name)) ){
-			App::get('io')->success("Created database: $name");
+		if( App::get(Query::class)->execute($this->sql($data)) ){
+			App::get('io')->success("Created database: $data[name]");
 		}
 	}
 
-	protected function sql(String $name){
+	protected function sql(Array $data){
 		return "
-			CREATE DATABASE $name
+			CREATE DATABASE $data[name]
 			CHARACTER SET utf8
 			COLLATE utf8_unicode_ci;
 		";
