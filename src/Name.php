@@ -23,7 +23,7 @@ class Name {
 		$this->name = $name;
 
 		// generate ID
-		App::bind('id', (new Random)->id());
+		App::bind('id', App::get('Random')->id());
 
 		$name = $this->database();
 		App::get('io')->write("<comment>name:</> <info>$name</>");

@@ -34,7 +34,7 @@ class Create extends Command {
 
 		$data['database'] = $database = App::get('Name')->database();
 		$data['username'] = App::get('Name')->user();
-		$data['password'] = (new Random)->password();
+		$data['password'] = App::get('Random')->password();
 
 		if( App::get('Query')->execute($this->sql($data)) ){
 			App::get('io')->success("Created database: $database");
