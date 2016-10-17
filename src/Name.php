@@ -47,7 +47,8 @@ class Name {
 		switch (App::get('Environment')) {
 			case 'development':
 				return "{$name}_A";
-			// TODO: case 'test':
+			case 'test':
+				return ["{$name}_A", "{$name}_E"];
 			case 'production':
 				return "{$name}_E";
 		}
