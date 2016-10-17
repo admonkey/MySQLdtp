@@ -43,18 +43,15 @@ class Name {
 	}
 
 	public function user(){
-		$name = $this->name;
+		$name = $this->database();
 		switch (App::get('Environment')) {
 			case 'development':
-				$env  = 'A';
-				break;
-			// TODO: case 'test':
+				return "{$name}_A";
+			case 'test':
+				return ["{$name}_A", "{$name}_E"];
 			case 'production':
-				$env  = 'E';
-				break;
+				return "{$name}_E";
 		}
-		$id = App::get('id');
-		return "{$name}_U{$env}_{$id}";
 	}
 
 	public function database(){
@@ -62,7 +59,7 @@ class Name {
 		$env  = App::get('Environment');
 		$env  = strtoupper(substr($env,0,1));
 		$id   = App::get('id');
-		return "{$name}_{$env}_{$id}";
+		return $name."_$env$id";
 	}
 
 	public function __toString(){

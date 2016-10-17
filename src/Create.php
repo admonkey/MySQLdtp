@@ -32,25 +32,55 @@ class Create extends Command {
 		App::bind('io', new IO($this, $input, $output))
 			->title('Create');
 
-		$data['database'] = $database = App::get('Name')->database();
-		$data['username'] = App::get('Name')->user();
-		$data['password'] = App::get('Random')->password();
+		$database = App::get('Name')->database();
+		$username = App::get('Name')->user();
 
-		if( App::get('Query')->execute($this->sql($data)) ){
+		if( App::get('Query')->execute($this->sql($database, $username)) ){
 			App::get('io')->success("Created database: $database");
 		}
 	}
 
-	protected function sql(Array $data){
-		extract($data);
-		$hostname = App::get('Hostname');
+	protected function sqlUserGrant(String $username) : String {
+		$last = $username[strlen($username)-1];
+		$database = App::get('Name')->database();
+
+		switch($last){
+			case 'A':
+				return "GRANT ALL PRIVILEGES ON $database.*";
+			case 'E':
+				return "GRANT EXECUTE ON $database.*";
+			default:
+				throw new \InvalidArgumentException(
+					"Expecting A or E, got $last"
+				);
+		}
+	}
+
+	protected function sqlUser(String $username) : String {
+		$hostname   = App::get('Hostname');
+		$password   = App::get('Random')->password();
+		$permission = $this->sqlUserGrant($username);
 		return "
+			CREATE USER '$username'@'$hostname'
+			IDENTIFIED BY '$password';
+			$permission TO '$username'@'$hostname';
+		";
+	}
+
+	protected function sql($database, $username){
+		$query = "
 			CREATE DATABASE $database
 			CHARACTER SET utf8
 			COLLATE utf8_unicode_ci;
-
-			CREATE USER '$username'@'$hostname'
-			IDENTIFIED BY '$password';
 		";
+
+		if(is_array($username)){
+			foreach($username as $user){
+				$query .= $this->sqlUser($user);
+			}
+			return $query;
+		}
+
+		return $query . $this->sqlUser($username);
 	}
 }
