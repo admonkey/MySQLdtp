@@ -32,11 +32,11 @@ class Drop extends Command {
 
 		$dropUsers = $this->dropUsers();
 
-		if( App::get(Query::class)->execute($this->dropDatabase()) ){
+		if( App::get('Query')->execute($this->dropDatabase()) ){
 			App::get('io')->success("Dropped database: {$this->database}");
 		}
 
-		if( App::get(Query::class)->execute($dropUsers) ){
+		if( App::get('Query')->execute($dropUsers) ){
 			App::get('io')->success("$dropUsers");
 		}
 	}
