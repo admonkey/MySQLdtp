@@ -25,7 +25,7 @@ class Environment {
 			return false;
 		}
 
-		switch(strtolower($environment)[0]){
+		switch(strtolower($environment[0])){
 			case 'd':
 				$this->environment = 'development';
 				break;
