@@ -25,21 +25,19 @@ class Environment {
 			return false;
 		}
 
-		switch(strtolower($environment)[0]){
+		switch(strtolower($environment[0])){
 			case 'd':
 				$this->environment = 'development';
-				break;
+				return true;
 			case 't':
 				$this->environment = 'test';
-				break;
+				return true;
 			case 'p':
 				$this->environment = 'production';
-				break;
+				return true;
 			default:
 				return false;
 		}
-
-		return true;
 	}
 
 	public function __toString(){
