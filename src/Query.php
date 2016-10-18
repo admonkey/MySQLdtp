@@ -22,6 +22,10 @@ class Query {
 		return $this->pdo->query($sql)->closeCursor();
 	}
 
+	public function query(String $sql){
+		return $this->pdo->query($sql);
+	}
+
 	protected function getLogin() : Array {
 		$login['username'] = App::get('io')->ask(
 			'What is the privileged username?', 'root'
