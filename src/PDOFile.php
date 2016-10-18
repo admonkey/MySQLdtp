@@ -20,8 +20,10 @@ class PDOFile {
 	}
 
 	public function __toString(){
-		return trim(preg_replace('/\t+/', '', "
-			<?php
+		// strip pretty indented tabs seen here, mixed with spaces
+		// http://stackoverflow.com/a/17176793/4233593
+		return preg_replace('/\t+/', '',
+			"<?php
 			return (function(){
 			    \$hostname = '{$this->hostname}';
 			    \$database = '{$this->database}';
@@ -38,6 +40,6 @@ class PDOFile {
 
 			    return \$pdo;
 			})();
-		"));
+		");
 	}
 }
