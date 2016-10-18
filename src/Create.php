@@ -60,7 +60,7 @@ class Create extends Command {
 		$hostname   = App::get('Hostname');
 		$password   = App::get('Random')->password();
 		$permission = $this->sqlUserGrant($username);
-		file_put_contents('test.pdo.php', new PDOFile(
+		file_put_contents("$username.pdo.php", new PDOFile(
 			App::get('Name')->database(),
 			$username,
 			$password,
