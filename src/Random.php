@@ -21,8 +21,16 @@ class Random {
 
 	public function password(Int $length = 32) : String {
 		// http://stackoverflow.com/a/31634299/4233593
+		$password = '';
+
+		// make sure one of each
+		foreach($this->characters as $chars){
+			$password .= $this->generate(1, $chars);
+		}
+
 		$chars = implode('', $this->characters);
-		return $this->generate($length, $chars);
+		$password .= $this->generate($length-count($this->characters), $chars);
+		return str_shuffle($password);
 	}
 
 	protected function generate(Int $length, String $chars) : String {
