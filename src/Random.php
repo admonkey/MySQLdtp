@@ -4,19 +4,24 @@ use RandomLib\Factory;
 use RuntimeException;
 
 class Random {
-	protected $alphanumeric =
-		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	protected $special = '{[(</|>)]} `~!@#$%^&*-_=+;:,.?';
-	protected $generator;
+	protected $characters = [
+		'lowercase' => 'abcdefghijklmnopqrstuvwxyz',
+		'uppercase' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+		'numbers'   => '0123456789',
+		'special'   => '{[(</|>)]} `~!@#$%^&*-_=+;:,.?',
+	];
 
 	public function id(Int $length = 5) : String {
-		$chars = $this->alphanumeric;
+		$chars =
+			$this->characters['lowercase'] .
+			$this->characters['uppercase'] .
+			$this->characters['numbers'];
 		return $this->generate($length, $chars);
 	}
 
 	public function password(Int $length = 32) : String {
 		// http://stackoverflow.com/a/31634299/4233593
-		$chars = $this->alphanumeric . $this->special;
+		$chars = implode('', $this->characters);
 		return $this->generate($length, $chars);
 	}
 
