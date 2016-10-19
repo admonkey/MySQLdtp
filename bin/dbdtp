@@ -28,6 +28,7 @@ $app = new Application($logo,'2.0-dev');
 
 $app->add(new Create);
 $app->add(new Drop);
+$app->add(new Execute);
 $app->add(new Purge);
 
 $app->run();
