@@ -1,7 +1,7 @@
 <?php
 namespace jpuck\dbdtp;
 use RandomLib\Factory;
-use RuntimeException;
+use InvalidArgumentException;
 
 class Random {
 	protected $characters = [
@@ -20,6 +20,13 @@ class Random {
 	}
 
 	public function password(Int $length = 32) : String {
+		$charsets = count($this->characters);
+		if($length < $charsets){
+			throw new InvalidArgumentException(
+				"Password must contain at least $charsets characters."
+			);
+		}
+
 		// http://stackoverflow.com/a/31634299/4233593
 		$password = '';
 
@@ -29,7 +36,7 @@ class Random {
 		}
 
 		$chars = implode('', $this->characters);
-		$password .= $this->generate($length-count($this->characters), $chars);
+		$password .= $this->generate($length - $charsets, $chars);
 		return str_shuffle($password);
 	}
 
