@@ -36,8 +36,10 @@ class Drop extends Command {
 			App::get('io')->success("Dropped database: {$this->database}");
 		}
 
-		if( App::get('Query')->execute($dropUsers) ){
-			App::get('io')->success("$dropUsers");
+		if(!empty($dropUsers)){
+			if( App::get('Query')->execute($dropUsers) ){
+				App::get('io')->success("$dropUsers");
+			}
 		}
 	}
 
@@ -56,7 +58,7 @@ class Drop extends Command {
 		";
 		$stmt = App::get('Query')->query($sql);
 		$sql = '';
-		while($result = $stmt->fetch(\PDO::FETCH_ASSOC)){
+		while(!empty($result = $stmt->fetch(\PDO::FETCH_ASSOC))){
 			$sql .= "DROP USER '$result[User]'@'$hostname';\n";
 		}
 		$stmt->closeCursor();
