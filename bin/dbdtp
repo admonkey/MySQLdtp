@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+namespace jpuck\dbdtp;
+require_once __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+$logo = '      _ _         _ _
+   __| | |__   __| | |_ _ __
+  / _` | \'_ \ / _` | __| \'_ \
+ | (_| | |_) | (_| | |_| |_) |
+  \__,_|_.__/ \__,_|\__| .__/
+                       |_|
+
+Database Dev/Test/Prod';
+// http://www.patorjk.com/software/taag/#p=display&f=Ivrit&t=dbdtp
+
+$app = new Application($logo,'2.0-dev');
+
+$app->add(new Create);
+$app->add(new Drop);
+
+$app->run();

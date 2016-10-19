@@ -25,18 +25,18 @@ Please report all bugs on the [Github issues page][4].
 
 ## Naming Schema
 
-Database names are prefixed with a maximum 7 character name of your choosing.
-Then a letter designates their environment `_D_` (Development), `_T_` (Test), or `_P_` (Production).
+Database names begin with a maximum 7 character name of your choosing, and end
+with a randomly generated 5 character identifier. The first letter of the ID
+designates its environment `D` (Development), `T` (Test), or `P` (Production).
 
-Every instance contains a randomly generated 5 character identifier. This allows you to easily spin up
-alternate environments for development and testing on the same server without conflict.
-The associated user accounts also end with this corresponding identifier.
+This allows you to easily spin up alternate environments for development and
+testing on the same server without conflict.
 
-Usernames are the same as the database name distinguished only by a `_U*_` instead of an environment flag.
-Test environments have two user accounts with the same password and nearly identical usernames.
-The privileged accounts are designated by `_UA_` (User ALL)
+Usernames are the same as the database name ending with an `_A` or an `_E` to
+designate perissions All or Execute respectively.
+The privileged accounts ending with `_A` (User ALL)
 and are intended for use with [DDL][1] in development and testing.
-The execute only accounts are designated by `_UE_` (User EXECUTE)
+The execute only accounts are designated by `_E` (User EXECUTE)
 and are intended for use by the application in testing and production.
 This follows the [principle of least privilege][3] whereby
 all [DML][2] is wrapped within explicit parameterized stored procedures.
@@ -44,15 +44,15 @@ all [DML][2] is wrapped within explicit parameterized stored procedures.
 ### Examples
 
 * Development
-    * Database Name: `example_D_4JAOb`
-    * Privileged User: `example_UA_4JAOb`
+    * Database:         `example_D4JAOb`
+    * Privileged  User: `example_D4JAOb_A`
 * Test
-    * Database Name: `example_T_zWwAo`
-    * Privileged User: `example_UA_zWwAo`
-    * Application User: `example_UE_zWwAo`
+    * Database:         `example_TzWwAo`
+    * Privileged  User: `example_TzWwAo_A`
+    * Application User: `example_TzWwAo_E`
 * Production
-    * Database Name: `example_P_NITvJ`
-    * Application User: `example_UE_NITvJ`
+    * Database:         `example_PNITvJ`
+    * Application User: `example_PNITvJ_E`
 
 ----------
 

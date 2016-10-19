@@ -1,16 +1,21 @@
 {
-    "name": "jpuck/mydtp",
-    "description": "Bash scripts to generate MySQL environments for dev/test/prod and execute a list of SQL scripts.",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Jeff Puckett",
-            "email": "jeff@jeffpuckett.com"
-        }
-    ],
-    "bin": [
-        "create_db_users.bash",
-        "exec_sql.bash"
-    ],
-    "require": {}
+	"name": "jpuck/dbdtp",
+	"description": "Symfony Console app to generate MySQL environments for dev/test/prod and execute a list of SQL scripts.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Jeff Puckett",
+			"email": "jeff@jeffpuckett.com"
+		}
+	],
+	"bin": ["bin/dbdtp"],
+	"require": {
+		"symfony/console": "^3.1",
+		"ircmaxell/random-lib": "^1.2"
+	},
+	"autoload": {
+		"psr-4": {
+			"jpuck\\dbdtp\\": "src/"
+		}
+	}
 }
