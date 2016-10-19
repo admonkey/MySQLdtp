@@ -1,6 +1,7 @@
 <?php
 namespace jpuck\dbdtp;
 use PDO;
+use PDOException;
 use RuntimeException;
 
 class Query {
@@ -19,7 +20,22 @@ class Query {
 	}
 
 	public function execute(String $sql) : Bool {
-		return $this->pdo->query($sql)->closeCursor();
+		$this->pdo->beginTransaction();
+		try {
+			$statement = $this->pdo->query($sql);
+			while ($statement->nextRowset()) {
+				/* https://bugs.php.net/bug.php?id=61613 */
+			};
+			$this->pdo->commit();
+		} catch (PDOException $e) {
+			$this->pdo->rollBack();
+			throw $e;
+		} finally {
+			if(isset($statement)){
+				$success = $statement->closeCursor();
+			}
+		}
+		return $success;
 	}
 
 	public function query(String $sql){
