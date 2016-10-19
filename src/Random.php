@@ -40,7 +40,19 @@ class Random {
 		return str_shuffle($password);
 	}
 
-	protected function generate(Int $length, String $chars) : String {
+	public function generate(Int $length, String $chars) : String {
+		if($length < 1){
+			throw new InvalidArgumentException(
+				"Length must be greater than zero."
+			);
+		}
+
+		if(empty($chars)){
+			throw new InvalidArgumentException(
+				"Must provide some characters."
+			);
+		}
+
 		return ($this->generator ?? $this->generator = (new Factory)
 			->getMediumStrengthGenerator())
 			->generateString($length, $chars);
