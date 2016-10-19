@@ -27,6 +27,10 @@ class Execute extends Command {
 			->title('Execute');
 
 		$pdo = require App::get('in')->getArgument('pdo');
-		$pdo->exec(file_get_contents(App::get('in')->getArgument('sql')));
+		$sql = file_get_contents(App::get('in')->getArgument('sql'));
+		$result = $pdo->exec($sql);
+		if($result !== false){
+			App::get('io')->success("Executed $sql");
+		}
 	}
 }
