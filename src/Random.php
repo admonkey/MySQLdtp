@@ -6,7 +6,7 @@ use RuntimeException;
 class Random {
 	protected $alphanumeric =
 		'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	protected $special = '{[(</|\>)]} `~!@#$%^&*-_=+;:,.?';
+	protected $special = '{[(</|>)]} `~!@#$%^&*-_=+;:,.?';
 	protected $generator;
 
 	public function id(Int $length = 5) : String {
