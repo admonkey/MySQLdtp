@@ -37,7 +37,7 @@ class Execute extends Command {
 
 		foreach($files as $file){
 			$sql = file_get_contents($file);
-			$result = $pdo->exec($sql);
+			$result = App::get('Query')->execute($sql);
 			if($result !== false){
 				App::get('io')->success("Executed $file");
 			}
