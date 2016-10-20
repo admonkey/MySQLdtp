@@ -8,25 +8,23 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Execute extends Command {
+	use QueryTrait;
 	protected function configure(){
 		$this->setName('execute')
 			->setDescription('Execute SQL scripts')
 			->addArgument(
-				'pdo',
-				InputArgument::OPTIONAL,
-				'File that returns an instance of PDO'
-			)->addArgument(
 				'sql',
 				InputArgument::OPTIONAL,
 				'SQL script file'
 			);
+		$this->addOptions();
 	}
 
 	public function execute(InputInterface $input, OutputInterface $output){
 		App::bind('io', new IO($this, $input, $output))
 			->title('Execute');
 
-		$pdo = require App::get('in')->getArgument('pdo');
+		$pdo = require App::get('in')->getOption('pdo');
 
 		$file = App::get('in')->getArgument('sql');
 		if(pathinfo($file, PATHINFO_EXTENSION) === 'sql'){
