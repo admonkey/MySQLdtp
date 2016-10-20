@@ -30,6 +30,12 @@ class Execute extends Command {
 
 		$file = App::get('in')->getArgument('sql');
 		if(pathinfo($file, PATHINFO_EXTENSION) === 'sql'){
+			$files []= $file;
+		} else {
+			$files = file($file, FILE_IGNORE_NEW_LINES);
+		}
+
+		foreach($files as $file){
 			$sql = file_get_contents($file);
 			$result = $pdo->exec($sql);
 			if($result !== false){
