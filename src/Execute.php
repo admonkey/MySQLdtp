@@ -29,11 +29,12 @@ class Execute extends Command {
 		$pdo = require App::get('in')->getArgument('pdo');
 
 		$file = App::get('in')->getArgument('sql');
-		$sql  = file_get_contents($file);
-
-		$result = $pdo->exec($sql);
-		if($result !== false){
-			App::get('io')->success("Executed $file");
+		if(pathinfo($file, PATHINFO_EXTENSION) === 'sql'){
+			$sql = file_get_contents($file);
+			$result = $pdo->exec($sql);
+			if($result !== false){
+				App::get('io')->success("Executed $file");
+			}
 		}
 	}
 }
