@@ -3,12 +3,25 @@ namespace jpuck\dbdtp;
 use PDO;
 use PDOException;
 use RuntimeException;
+use InvalidArgumentException;
 
 class Query {
 	protected $pdo;
 
 	public function __construct(){
-		$this->connect();
+		$pdo = App::get('in')->getOption('pdo');
+		if(empty($pdo)){
+			$this->connect();
+		} else {
+			$pdo = require $pdo;
+			if($pdo instanceof PDO){
+				$this->pdo = $pdo;
+			} else {
+				throw new InvalidArgumentException(
+					'File does not return instance of PDO'
+				);
+			}
+		}
 		$this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 	}
 

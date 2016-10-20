@@ -24,8 +24,6 @@ class Execute extends Command {
 		App::bind('io', new IO($this, $input, $output))
 			->title('Execute');
 
-		$pdo = require App::get('in')->getOption('pdo');
-
 		$file = App::get('in')->getArgument('sql');
 		if(pathinfo($file, PATHINFO_EXTENSION) === 'sql'){
 			$files []= $file;
