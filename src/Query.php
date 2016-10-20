@@ -8,14 +8,7 @@ class Query {
 	protected $pdo;
 
 	public function __construct(){
-		$hostname = App::get('Hostname');
-		extract($this->getLogin());
-		$this->pdo = new PDO(
-			"mysql:host=$hostname;
-			charset=UTF8",
-			$username,
-			$password
-		);
+		$this->connect();
 		$this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 	}
 
@@ -40,6 +33,17 @@ class Query {
 
 	public function query(String $sql){
 		return $this->pdo->query($sql);
+	}
+
+	protected function connect(){
+		$hostname = App::get('Hostname');
+		extract($this->getLogin());
+		$this->pdo = new PDO(
+			"mysql:host=$hostname;
+			charset=UTF8",
+			$username,
+			$password
+		);
 	}
 
 	protected function getLogin() : Array {
