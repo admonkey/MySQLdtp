@@ -109,15 +109,6 @@ Or prompt for database credentials when executing:
 
     ./vendor/jpuck/mydtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst"
 
-### Troubleshooting
-
-    line 95: $sql: ambiguous redirect
-
-This is most likely caused by sending your `ddl.sql` file as the
-list. The `sql.lst` is supposed to be a list of filenames that
-contain DDL, and not the DDL file itself. This is a common mistake
-when your project only has one DDL file.
-
 ----------
 
   [1]:https://en.wikipedia.org/wiki/Data_definition_language
