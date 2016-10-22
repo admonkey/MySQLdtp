@@ -109,20 +109,6 @@ Or prompt for database credentials when executing:
 
     ./vendor/jpuck/mydtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst"
 
-### Saving Commands & Version Control
-
-Writing out these long commands repeatedly gets old quickly.
-`exec_sql.bash` will save the last command you run to an executable file called `exec_sql`
-Notice that it has no file extension such as `.bash`
-You will be able to run the last saved command with an easy shortcut:
-
-    ./exec_sql
-
-If you run a different command later, then you will be prompted to overwrite before saving.
-
-It is advisable to commit both your shortcut `exec_sql` and the SQL list to version control,
-but *do not* track your `credentials.local.*` files.
-
 ### Troubleshooting
 
     line 95: $sql: ambiguous redirect
