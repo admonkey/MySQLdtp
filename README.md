@@ -4,7 +4,9 @@
 [![Total Downloads][8]][6]
 [![License][9]][6]
 
-Use Bash & MySQL client to create dev/test/prod database & users, and execute a list of your SQL scripts.
+PHP console application to create/drop databases & users as well as execute
+lists of SQL scripts.
+
 The default character set is UTF-8 and collation is utf8_unicode_ci.
 
 * Development
@@ -20,7 +22,7 @@ The default character set is UTF-8 and collation is utf8_unicode_ci.
 
 ## Requirements
 
-* GNU bash, version 4.3.11(1)-release (x86_64-pc-linux-gnu)
+* PHP >= 7
 * mysql  Ver 14.14 Distrib 5.5.49, for debian-linux-gnu (x86_64) using readline 6.3
 
 Please report all bugs on the [Github issues page][4].
