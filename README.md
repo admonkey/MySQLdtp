@@ -1,6 +1,8 @@
 # Generate MySQL Environments
 
-[![Latest Stable Version](https://poser.pugx.org/jpuck/mydtp/v/stable)](https://packagist.org/packages/jpuck/mydtp) [![Total Downloads](https://poser.pugx.org/jpuck/mydtp/downloads)](https://packagist.org/packages/jpuck/mydtp) [![Latest Unstable Version](https://poser.pugx.org/jpuck/mydtp/v/unstable)](https://packagist.org/packages/jpuck/mydtp) [![License](https://poser.pugx.org/jpuck/mydtp/license)](https://packagist.org/packages/jpuck/mydtp)
+[![Latest Stable Version][7]][6]
+[![Total Downloads][8]][6]
+[![License][9]][6]
 
 Use Bash & MySQL client to create dev/test/prod database & users, and execute a list of your SQL scripts.
 The default character set is UTF-8 and collation is utf8_unicode_ci.
@@ -117,3 +119,6 @@ Or prompt for database credentials when executing:
   [4]:https://github.com/jpuck/mydtp/issues
   [5]:https://getcomposer.org/
   [6]:https://packagist.org/packages/jpuck/mydtp
+  [7]:https://poser.pugx.org/jpuck/mydtp/v/stable
+  [8]:https://poser.pugx.org/jpuck/mydtp/downloads
+  [9]:https://poser.pugx.org/jpuck/mydtp/license
