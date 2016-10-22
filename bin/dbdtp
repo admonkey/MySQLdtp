@@ -9,6 +9,8 @@ if(file_exists(__DIR__.'/../../../autoload.php')){
 
 use Symfony\Component\Console\Application;
 
+set_error_handler([ErrorHandler::class,'exceptionalizer']);
+
 $logo = '
                       _ _
   _ __ ___  _   _  __| | |_ _ __
@@ -28,6 +30,7 @@ $app = new Application($logo,'2.0-dev');
 
 $app->add(new Create);
 $app->add(new Drop);
+$app->add(new Execute);
 $app->add(new Purge);
 
 $app->run();
