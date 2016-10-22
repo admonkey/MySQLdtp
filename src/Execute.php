@@ -15,7 +15,7 @@ class Execute extends Command {
 			->addArgument(
 				'sql',
 				InputArgument::OPTIONAL,
-				'SQL script file'
+				'SQL script, or list of scripts'
 			);
 		$this->addOptions();
 	}
@@ -25,10 +25,14 @@ class Execute extends Command {
 			->title('Execute');
 
 		$file = App::get('in')->getArgument('sql');
-		if(pathinfo($file, PATHINFO_EXTENSION) === 'sql'){
+		$pathinfo = pathinfo($file);
+		if($pathinfo['extension'] === 'sql'){
 			$files []= $file;
 		} else {
 			$files = file($file, FILE_IGNORE_NEW_LINES);
+			// eager load in case of PDOFile path before chdir
+			App::get('Query');
+			chdir($pathinfo['dirname']);
 		}
 
 		foreach($files as $file){
