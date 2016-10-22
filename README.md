@@ -10,15 +10,12 @@ lists of SQL scripts.
 The default character set is UTF-8 and collation is utf8_unicode_ci.
 
 * Development
-    * user with all privileges (Bash & PHP credentials file generated)
-    * 16 character password
+    * user with all privileges
 * Testing Quality Assurance
-    * user with all privileges (Bash credentials file generated)
-    * user with only stored procedure execute privileges (PHP credentials file generated)
-    * 16 character matching passwords
+    * user with all privileges
+    * user with only stored procedure execute privileges
 * Production
-    * user with only stored procedure execute privileges (PHP credentials file generated)
-    * 32 character password
+    * user with only stored procedure execute privileges
 
 ## Requirements
 
@@ -62,39 +59,26 @@ all [DML][2] is wrapped within explicit parameterized stored procedures.
 
 ## Getting Started
 
-It's recommended to install this from [packagist][6] into your project as a dependency using [composer][5].
+Registered on [packagist][6] for easy installation using [composer][5].
 
-    php composer.phar require jpuck/mydtp
+    composer global require jpuck/mydtp
 
-There are two scripts:
-one for creating the database and users,
-and one for executing SQL scripts, such as [DDL][2].
+Run without any arguments to see a list of commands.
 
-* `create_db_users.bash`
+    dbdtp
 
-        environment: -e <dev|test|prod>
-        database name (limit 7 characters): -n <name>
-        database server (optional default localhost): -s <hostname>
+Use the `-h` flag with any command to get help with usage.
 
-   This will generate one or both of `credentials.local.bash` and `credentials.local.inc.php`
-
-* `exec_sql.bash`
-
-        list of SQL files: -l </path/to/SQL.lst>
-        credentials file  (optional prompt): -c </path/to/credentials.local.bash>
-
-   This will execute SQL scripts listed in order from the directory in which the list is located.
-   The list may contain relative or absolute paths to SQL files.
-
-### Examples
+    dbdtp <command> -h
 
 Create a *development* environment with name prefix `dbname` on *localhost*:
 
-    ./vendor/jpuck/mydtp/create_db_users.bash -e dev -n dbname
+    dbdtp create -e dev dbname
 
-Create a *production* environment with name prefix `dbname` on a *server* located at `mysql.example.com`
+Create a *production* environment with name prefix `dbname` on a *server*
+located at `mysql.example.com`
 
-    ./vendor/jpuck/mydtp/create_db_users.bash -e prod -n dbname -s "mysql.example.com"
+    dbdtp create -e prod -H "mysql.example.com" dbname
 
 A list of SQL scripts to be executed can contain files in the *same* directory,
 *relative* paths outside the directory, or *absolute* paths anywhere on the system.
@@ -107,11 +91,11 @@ A list of SQL scripts to be executed can contain files in the *same* directory,
 
 Use the generated credentials file to execute the list of SQL scripts:
 
-    ./vendor/jpuck/mydtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst" -c credentials.local.bash
+    dbdtp execute -p example_D4JAOb_A.pdo.php "/var/www/project/SQL/example_sql.lst"
 
 Or prompt for database credentials when executing:
 
-    ./vendor/jpuck/mydtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst"
+    dbdtp execute "/var/www/project/SQL/example_sql.lst"
 
 ----------
 
