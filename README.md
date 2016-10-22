@@ -118,19 +118,6 @@ list. The `sql.lst` is supposed to be a list of filenames that
 contain DDL, and not the DDL file itself. This is a common mistake
 when your project only has one DDL file.
 
-## Developing and Testing this Project
-
-There's a `tests` folder with some trivial SQL and an executable `exec_sql`
-the contents of which are:
-
-    ../exec_sql.bash -c credentials.local.bash -l SQL/sql.lst
-
-So in order to generate the required `credentials.local.bash` file, just run
-the included script to set up your test database, for example called `mydtp`:
-
-    cd tests
-    ../create_db_users.bash -e test -n mydtp
-
 ----------
 
   [1]:https://en.wikipedia.org/wiki/Data_definition_language
