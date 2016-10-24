@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Drop extends Command {
+	use QueryTrait;
 	protected $database;
 	protected function configure(){
 		$this->setName('drop')
@@ -16,12 +17,8 @@ class Drop extends Command {
 				'name',
 				InputArgument::REQUIRED,
 				'What\'s the name of the database you would you like to drop?'
-			)->addOption(
-				'hostname',
-				'H',
-				InputOption::VALUE_REQUIRED,
-				'What is the database server hostname?'
 			);
+		$this->addOptions();
 	}
 
 	public function execute(InputInterface $input, OutputInterface $output){
