@@ -1,0 +1,35 @@
+#!/usr/bin/env php
+<?php
+namespace jpuck\dbdtp;
+if(file_exists(__DIR__.'/../../../autoload.php')){
+	require_once __DIR__.'/../../../autoload.php';
+} else {
+	require_once __DIR__.'/../vendor/autoload.php';
+}
+
+use Symfony\Component\Console\Application;
+
+set_error_handler([ErrorHandler::class,'exceptionalizer']);
+
+$logo = '
+            _ _
+   ____  __| | |__  ____
+  / _  |/ _  |  _ \|  _ \
+ | (_| | (_| | |_) | |_) |
+  \__  |\____|____/|  __/
+     |_|           |_|
+
+Quick Databases for PHP
+';
+
+// ASCII art logo:
+// http://www.patorjk.com/software/taag/#p=display&f=Ivrit&t=dbdtp
+
+$app = new Application($logo,'2.0');
+
+$app->add(new Create);
+$app->add(new Drop);
+$app->add(new Execute);
+$app->add(new Purge);
+
+$app->run();

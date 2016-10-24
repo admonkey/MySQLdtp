@@ -1,96 +1,89 @@
-# Generate MySQL Environments
+# Quick Databases for PHP
 
-[![Latest Stable Version](https://poser.pugx.org/jpuck/mydtp/v/stable)](https://packagist.org/packages/jpuck/mydtp) [![Total Downloads](https://poser.pugx.org/jpuck/mydtp/downloads)](https://packagist.org/packages/jpuck/mydtp) [![Latest Unstable Version](https://poser.pugx.org/jpuck/mydtp/v/unstable)](https://packagist.org/packages/jpuck/mydtp) [![License](https://poser.pugx.org/jpuck/mydtp/license)](https://packagist.org/packages/jpuck/mydtp)
+[![Latest Stable Version][7]][6]
+[![Total Downloads][8]][6]
+[![License][9]][6]
 
-Use Bash & MySQL client to create dev/test/prod database & users, and execute a list of your SQL scripts.
-The default character set is UTF-8 and collation is utf8_unicode_ci.
+PHP7 console application to create/drop databases & users as well as execute
+lists of SQL scripts. This will also generate a PHP file that returns an
+instance of [PDO][10].
 
-* Development
-    * user with all privileges (Bash & PHP credentials file generated)
-    * 16 character password
-* Testing Quality Assurance
-    * user with all privileges (Bash credentials file generated)
-    * user with only stored procedure execute privileges (PHP credentials file generated)
-    * 16 character matching passwords
-* Production
-    * user with only stored procedure execute privileges (PHP credentials file generated)
-    * 32 character password
+Currently supports creating MySQL environments with a default character set of
+UTF-8 and utf8_unicode_ci collation.
 
-## Requirements
-
-* GNU bash, version 4.3.11(1)-release (x86_64-pc-linux-gnu)
-* mysql  Ver 14.14 Distrib 5.5.49, for debian-linux-gnu (x86_64) using readline 6.3
+The purge command is for Microsoft SQL Server.
 
 Please report all bugs on the [Github issues page][4].
 
+## Environments
+
+* Development
+    * user with all privileges
+* Testing Quality Assurance
+    * user with all privileges
+    * user with only stored procedure execute privileges
+* Production
+    * user with only stored procedure execute privileges
+
 ## Naming Schema
 
-Database names are prefixed with a maximum 7 character name of your choosing.
-Then a letter designates their environment `_D_` (Development), `_T_` (Test), or `_P_` (Production).
+Database names begin with a maximum 7 character name of your choosing, and end
+with a randomly generated 5 character identifier. The first letter of the ID
+designates its environment `D` (Development), `T` (Test), or `P` (Production).
 
-Every instance contains a randomly generated 5 character identifier. This allows you to easily spin up
-alternate environments for development and testing on the same server without conflict.
-The associated user accounts also end with this corresponding identifier.
+This allows you to easily spin up alternate environments for development and
+testing on the same server without conflict.
 
-Usernames are the same as the database name distinguished only by a `_U*_` instead of an environment flag.
-Test environments have two user accounts with the same password and nearly identical usernames.
-The privileged accounts are designated by `_UA_` (User ALL)
+Usernames are the same as the database name ending with an `_A` or an `_E` to
+designate permissions (All or Execute respectively).
+The privileged accounts ending with `_A` (User ALL)
 and are intended for use with [DDL][1] in development and testing.
-The execute only accounts are designated by `_UE_` (User EXECUTE)
+The execute only accounts are designated by `_E` (User EXECUTE)
 and are intended for use by the application in testing and production.
 This follows the [principle of least privilege][3] whereby
 all [DML][2] is wrapped within explicit parameterized stored procedures.
 
+The reason names are limited to 7 characters is because up until MySQL 5.7.8
+[usernames could only be 16 characters long][11]. Now they can be 32, but this
+application currently constrains that for backwards compatibility.
+
 ### Examples
 
 * Development
-    * Database Name: `example_D_4JAOb`
-    * Privileged User: `example_UA_4JAOb`
+    * Database:         `example_D4JAOb`
+    * Privileged  User: `example_D4JAOb_A`
 * Test
-    * Database Name: `example_T_zWwAo`
-    * Privileged User: `example_UA_zWwAo`
-    * Application User: `example_UE_zWwAo`
+    * Database:         `example_TzWwAo`
+    * Privileged  User: `example_TzWwAo_A`
+    * Application User: `example_TzWwAo_E`
 * Production
-    * Database Name: `example_P_NITvJ`
-    * Application User: `example_UE_NITvJ`
+    * Database:         `example_PNITvJ`
+    * Application User: `example_PNITvJ_E`
 
 ----------
 
 ## Getting Started
 
-It's recommended to install this from [packagist][6] into your project as a dependency using [composer][5].
+Registered on [packagist][6] for easy installation using [composer][5].
 
-    php composer.phar require jpuck/mydtp
+    composer global require jpuck/qdbp
 
-There are two scripts:
-one for creating the database and users,
-and one for executing SQL scripts, such as [DDL][2].
+Run without any arguments to see a list of commands.
 
-* `create_db_users.bash`
+    qdbp
 
-        environment: -e <dev|test|prod>
-        database name (limit 7 characters): -n <name>
-        database server (optional default localhost): -s <hostname>
+Use the `-h` flag with any command to get help with usage.
 
-   This will generate one or both of `credentials.local.bash` and `credentials.local.inc.php`
-
-* `exec_sql.bash`
-
-        list of SQL files: -l </path/to/SQL.lst>
-        credentials file  (optional prompt): -c </path/to/credentials.local.bash>
-
-   This will execute SQL scripts listed in order from the directory in which the list is located.
-   The list may contain relative or absolute paths to SQL files.
-
-### Examples
+    qdbp <command> -h
 
 Create a *development* environment with name prefix `dbname` on *localhost*:
 
-    ./vendor/jpuck/mydtp/create_db_users.bash -e dev -n dbname
+    qdbp create -e dev dbname
 
-Create a *production* environment with name prefix `dbname` on a *server* located at `mysql.example.com`
+Create a *production* environment with name prefix `dbname` on a *server*
+located at `mysql.example.com`
 
-    ./vendor/jpuck/mydtp/create_db_users.bash -e prod -n dbname -s "mysql.example.com"
+    qdbp create -e prod -H "mysql.example.com" dbname
 
 A list of SQL scripts to be executed can contain files in the *same* directory,
 *relative* paths outside the directory, or *absolute* paths anywhere on the system.
@@ -103,53 +96,22 @@ A list of SQL scripts to be executed can contain files in the *same* directory,
 
 Use the generated credentials file to execute the list of SQL scripts:
 
-    ./vendor/jpuck/mydtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst" -c credentials.local.bash
+    qdbp execute -p example_D4JAOb_A.pdo.php "/var/www/project/SQL/example_sql.lst"
 
 Or prompt for database credentials when executing:
 
-    ./vendor/jpuck/mydtp/exec_sql.bash -l "/var/www/project/SQL/example_sql.lst"
-
-### Saving Commands & Version Control
-
-Writing out these long commands repeatedly gets old quickly.
-`exec_sql.bash` will save the last command you run to an executable file called `exec_sql`
-Notice that it has no file extension such as `.bash`
-You will be able to run the last saved command with an easy shortcut:
-
-    ./exec_sql
-
-If you run a different command later, then you will be prompted to overwrite before saving.
-
-It is advisable to commit both your shortcut `exec_sql` and the SQL list to version control,
-but *do not* track your `credentials.local.*` files.
-
-### Troubleshooting
-
-    line 95: $sql: ambiguous redirect
-
-This is most likely caused by sending your `ddl.sql` file as the
-list. The `sql.lst` is supposed to be a list of filenames that
-contain DDL, and not the DDL file itself. This is a common mistake
-when your project only has one DDL file.
-
-## Developing and Testing this Project
-
-There's a `tests` folder with some trivial SQL and an executable `exec_sql`
-the contents of which are:
-
-    ../exec_sql.bash -c credentials.local.bash -l SQL/sql.lst
-
-So in order to generate the required `credentials.local.bash` file, just run
-the included script to set up your test database, for example called `mydtp`:
-
-    cd tests
-    ../create_db_users.bash -e test -n mydtp
+    qdbp execute "/var/www/project/SQL/example_sql.lst"
 
 ----------
 
   [1]:https://en.wikipedia.org/wiki/Data_definition_language
   [2]:https://en.wikipedia.org/wiki/Data_manipulation_language
   [3]:https://en.wikipedia.org/wiki/Principle_of_least_privilege
-  [4]:https://github.com/jpuck/mydtp/issues
+  [4]:https://github.com/jpuck/qdbp/issues
   [5]:https://getcomposer.org/
-  [6]:https://packagist.org/packages/jpuck/mydtp
+  [6]:https://packagist.org/packages/jpuck/qdbp
+  [7]:https://poser.pugx.org/jpuck/qdbp/v/stable
+  [8]:https://poser.pugx.org/jpuck/qdbp/downloads
+  [9]:https://poser.pugx.org/jpuck/qdbp/license
+  [10]:http://php.net/manual/en/book.pdo.php
+  [11]:http://dev.mysql.com/doc/refman/5.7/en/user-names.html
