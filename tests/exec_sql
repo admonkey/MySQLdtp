@@ -1,1 +1,0 @@
-../exec_sql.bash -c credentials.local.bash -l SQL/sql.lst
