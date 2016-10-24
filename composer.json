@@ -1,5 +1,5 @@
 {
-	"name": "jpuck/dbdtp",
+	"name": "jpuck/qdbp",
 	"description": "Symfony Console app to generate MySQL environments for dev/test/prod and execute a list of SQL scripts.",
 	"license": "MIT",
 	"authors": [
@@ -8,7 +8,7 @@
 			"email": "jeff@jeffpuckett.com"
 		}
 	],
-	"bin": ["bin/dbdtp"],
+	"bin": ["bin/qdbp"],
 	"require": {
 		"symfony/console": "^3.1",
 		"ircmaxell/random-lib": "^1.2",
@@ -16,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"jpuck\\dbdtp\\": "src/"
+			"jpuck\\qdbp\\": "src/"
 		}
 	}
 }

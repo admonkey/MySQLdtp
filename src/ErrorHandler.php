@@ -1,5 +1,5 @@
 <?php
-namespace jpuck\dbdtp;
+namespace jpuck\qdbp;
 use ErrorException;
 
 class ErrorHandler {

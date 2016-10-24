@@ -1,5 +1,5 @@
 <?php
-namespace jpuck\dbdtp;
+namespace jpuck\qdbp;
 use RandomLib\Factory;
 use InvalidArgumentException;
 

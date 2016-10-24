@@ -1,5 +1,5 @@
 <?php
-namespace jpuck\dbdtp;
+namespace jpuck\qdbp;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

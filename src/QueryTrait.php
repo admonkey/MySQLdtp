@@ -1,5 +1,5 @@
 <?php
-namespace jpuck\dbdtp;
+namespace jpuck\qdbp;
 use Symfony\Component\Console\Input\InputOption;
 
 trait QueryTrait {
