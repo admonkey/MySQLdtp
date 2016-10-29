@@ -1,6 +1,6 @@
 {
 	"name": "jpuck/qdbp",
-	"description": "Symfony Console app to generate MySQL environments for dev/test/prod and execute a list of SQL scripts.",
+	"description": "Quick Databases for PHP",
 	"license": "MIT",
 	"authors": [
 		{
@@ -12,7 +12,8 @@
 	"require": {
 		"symfony/console": "^3.1",
 		"ircmaxell/random-lib": "^1.2",
-		"jpuck/phpdev": "^1.4"
+		"jpuck/phpdev": "^1.4",
+		"php": "^7.0"
 	},
 	"autoload": {
 		"psr-4": {
