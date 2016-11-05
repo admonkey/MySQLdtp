@@ -4,7 +4,7 @@
 [![Total Downloads][8]][6]
 [![License][9]][6]
 
-PHP7 console application to create/drop databases & users as well as execute
+PHP7 command line console application to create/drop databases & users as well as execute
 lists of SQL scripts. This will also generate a PHP file that returns an
 instance of [PDO][10].
 
@@ -64,11 +64,22 @@ application currently constrains that for backwards compatibility.
 
 ## Getting Started
 
-Registered on [packagist][6] for easy installation using [composer][5].
+Registered on [packagist][6] for easy [global installation][12] using [composer][5].
 
     composer global require jpuck/qdbp
 
-Run without any arguments to see a list of commands.
+Make sure your `$PATH` contains the global bin directory,
+because [composer doesn't automatically modify your `$PATH` variable][13].
+However, composer will tell you the [location of the global bin directory][12]:
+
+    composer global config bin-dir --absolute
+
+You can then [add that location to your shell profile or rc so that it's always available][14].
+For example, if you're running Ubuntu 16.04 with bash, then this might work:
+
+    echo 'export PATH="$PATH:$HOME/.config/composer/vendor/bin"' >> ~/.bashrc
+
+After installing, run without any arguments to see a list of commands.
 
     qdbp
 
@@ -119,3 +130,6 @@ For example, the contents of `sql.lst` could look like this:
   [9]:https://poser.pugx.org/jpuck/qdbp/license
   [10]:http://php.net/manual/en/book.pdo.php
   [11]:http://dev.mysql.com/doc/refman/5.7/en/user-names.html
+  [12]:https://getcomposer.org/doc/03-cli.md#global
+  [13]:https://github.com/composer/composer/issues/4072
+  [14]:http://unix.stackexchange.com/a/26059/148062
