@@ -95,7 +95,7 @@ Execute an SQL script using the generated credentials file:
 
     qdbp execute -p /path/to/example_D4JAOb_A.pdo.php /path/to/ddl.sql
 
-Use to execute the list of SQL scripts:
+Execute a list of SQL scripts:
 
     qdbp execute -p example_D4JAOb_A.pdo.php /path/to/sql.lst
 
