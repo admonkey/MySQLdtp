@@ -37,7 +37,7 @@ testing on the same server without conflict.
 Usernames are the same as the database name ending with an `_A` or an `_E` to
 designate permissions (All or Execute respectively).
 The privileged accounts ending with `_A` (User ALL)
-and are intended for use with [DDL][1] in development and testing.
+are intended for use with [DDL][1] in development and testing.
 The execute only accounts are designated by `_E` (User EXECUTE)
 and are intended for use by the application in testing and production.
 This follows the [principle of least privilege][3] whereby
