@@ -76,33 +76,37 @@ Use the `-h` flag with any command to get help with usage.
 
     qdbp <command> -h
 
+### Examples
+
 Create a *development* environment with name prefix `dbname` on *localhost*:
 
     qdbp create -e dev dbname
 
-Create a *production* environment with name prefix `dbname` on a *server*
-located at `mysql.example.com`
+Create a *production* environment with name prefix `dbname` on a server
+located at *mysql.example.com*:
 
-    qdbp create -e prod -H "mysql.example.com" dbname
+    qdbp create -e prod -H mysql.example.com dbname
+
+Execute an SQL script:
+
+    qdbp execute /path/to/ddl.sql
+
+Execute an SQL script using the generated credentials file:
+
+    qdbp execute -p /path/to/example_D4JAOb_A.pdo.php /path/to/ddl.sql
+
+Use to execute the list of SQL scripts:
+
+    qdbp execute -p example_D4JAOb_A.pdo.php /path/to/sql.lst
 
 A list of SQL scripts to be executed can contain files in the *same* directory,
 *relative* paths outside the directory, or *absolute* paths anywhere on the system.
-
-`example_sql.lst`
+For example, the contents of `sql.lst` could look like this:
 
     drop_tables.sql
     ../ddl.sql
     /var/www/project/SQL/stored_procedures.sql
 
-Use the generated credentials file to execute the list of SQL scripts:
-
-    qdbp execute -p example_D4JAOb_A.pdo.php "/var/www/project/SQL/example_sql.lst"
-
-Or prompt for database credentials when executing:
-
-    qdbp execute "/var/www/project/SQL/example_sql.lst"
-
-----------
 
   [1]:https://en.wikipedia.org/wiki/Data_definition_language
   [2]:https://en.wikipedia.org/wiki/Data_manipulation_language
