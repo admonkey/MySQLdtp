@@ -8,7 +8,7 @@ class Random {
 		'lowercase' => 'abcdefghijklmnopqrstuvwxyz',
 		'uppercase' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 		'numbers'   => '0123456789',
-		'special'   => '{[(</|>)]} `~!@#$%^&*-_=+;:,.?',
+		'special'   => '{[(</|>)]}~!@#%^&*-_=+;:,.?',
 	];
 
 	public function id(Int $length = 5) : String {
