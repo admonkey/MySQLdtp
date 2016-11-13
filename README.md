@@ -68,7 +68,7 @@ return (function(){
     $hostname = 'localhost';
     $database = 'example_D4JAOb';
     $username = 'example_D4JAOb_A';
-    $password = '),IC3ajr{&9UUz`Sb^?02H$,xm&/i_+G';
+    $password = '8is+G?Gkg.BNW_}9B5kmjPyr02G~Z2lO';
 
     $pdo = new PDO("mysql:host=$hostname;
         charset=UTF8;
