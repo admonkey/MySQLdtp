@@ -60,6 +60,40 @@ application currently constrains that for backwards compatibility.
     * Database:         `example_PNITvJ`
     * Application User: `example_PNITvJ_E`
 
+The generated PHP file will return an instance of PDO and looks like this:
+
+```php
+<?php
+return (function(){
+    $hostname = 'localhost';
+    $database = 'example_D4JAOb';
+    $username = 'example_D4JAOb_A';
+    $password = '),IC3ajr{&9UUz`Sb^?02H$,xm&/i_+G';
+
+    $pdo = new PDO("mysql:host=$hostname;
+        charset=UTF8;
+        dbname=$database",
+        $username,
+        $password
+    );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    return $pdo;
+})();
+```
+The anonymous function allows for easy inclusion in any PHP script
+without conflicting with variable names.
+
+```php
+<?php
+
+$pdo = require __DIR__.'/example_D4JAOb_A.pdo.php';
+
+$sql = 'SELECT * FROM Users';
+
+$array = $pdo->query($sql)->fetchAll();
+```
+
 ----------
 
 ## Getting Started
