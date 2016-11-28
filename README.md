@@ -64,7 +64,7 @@ The generated PHP file will return an instance of PDO and looks like this:
 
 ```php
 <?php
-return (function(){
+return call_user_func(function(){
     $hostname = 'localhost';
     $database = 'example_D4JAOb';
     $username = 'example_D4JAOb_A';
@@ -79,7 +79,7 @@ return (function(){
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     return $pdo;
-})();
+});
 ```
 The anonymous function allows for easy inclusion in any PHP script
 without conflicting with variable names.

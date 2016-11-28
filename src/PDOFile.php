@@ -24,7 +24,7 @@ class PDOFile {
 		// http://stackoverflow.com/a/17176793/4233593
 		return preg_replace('/\t+/', '',
 			"<?php
-			return (function(){
+			return call_user_func(function(){
 			    \$hostname = '{$this->hostname}';
 			    \$database = '{$this->database}';
 			    \$username = '{$this->username}';
@@ -39,7 +39,7 @@ class PDOFile {
 			    \$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			    return \$pdo;
-			})();
+			});
 		");
 	}
 }
